@@ -8,6 +8,6 @@ namespace MyAutoAPI1.Services
     {
         public Statement GetStatementById(int id);
         public List<Statement> GetAllStatements();
-        public Task<Statement> AddStatement(Statement data);
+        public Statement AddStatement(Statement data);
     }
 }

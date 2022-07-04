@@ -14,7 +14,7 @@ namespace MyAutoAPI1.Services
             _dbContext = dbContext;
         }
 
-        public async Task<Statement> AddStatement(Statement data)
+        public Statement AddStatement(Statement data)
         {
             var statement = new Statement()
             {

@@ -54,11 +54,11 @@ namespace MyAutoAPI1.Controllers
 
         [HttpPost]
         [Route("add")]
-        public async Task<IActionResult> AddStatement([FromBody] Statement statement)
+        public IActionResult AddStatement([FromBody] Statement statement)
         {
             ComonResponse<Statement> comonResponse = new ComonResponse<Statement>();
 
-            var res = await _statementService.AddStatement(statement);
+            var res = _statementService.AddStatement(statement);
             if (res == null)
             {
                 comonResponse.isError = true;
