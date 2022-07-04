@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MyAutoAPI1.Models;
 using MyAutoAPI1.Services;
+using MyAutoAPI1.Services.Currency;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +38,7 @@ namespace MyAutoAPI1
             });
 
             services.AddTransient<IStatementServices, StatementServices>();
+            services.AddTransient<ICurrencyServices, CurrencyServices>();
             services.AddDbContext<MyDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
 

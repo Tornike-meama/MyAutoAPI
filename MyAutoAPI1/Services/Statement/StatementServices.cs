@@ -21,8 +21,9 @@ namespace MyAutoAPI1.Services
                 Title = data.Title,
                 Description = data.Description,
                 Price = data.Price,
+                CurrencyId = data.CurrencyId,
             };
-            _dbContext.Add(statement);
+            _dbContext.Statement.Add(statement);
             _dbContext.SaveChanges();
             return statement;
         }
