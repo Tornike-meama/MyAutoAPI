@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MyAutoAPI1.Models;
+using MyAutoAPI1.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,7 @@ namespace MyAutoAPI1
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MyAutoAPI1", Version = "v1" });
             });
 
+            services.AddTransient<IStatementServices, StatementServices>();
             services.AddDbContext<MyDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
 
