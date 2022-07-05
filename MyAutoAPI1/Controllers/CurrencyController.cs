@@ -20,7 +20,7 @@ namespace MyAutoAPI1.Controllers
 
         [HttpGet]
         [Route("getAll")]
-        public IActionResult GetAllCurrency(Currency currency)
+        public IActionResult GetAllCurrency()
         {
             ComonResponse<List<Currency>> comonResponse = new ComonResponse<List<Currency>>();
 
