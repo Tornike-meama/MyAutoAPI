@@ -37,10 +37,10 @@ namespace MyAutoAPI1.Controllers
 
         [HttpGet]
         [Route("getAll")]
-        public IActionResult GetAllStatements()
+        public IActionResult GetAllStatements([FromQuery] int count, [FromQuery] int fromIndex)
         {
             ComonResponse<List<Statement>> comonResponse = new ComonResponse<List<Statement>>();
-            var res = _statementService.GetAllStatements();
+            var res = _statementService.GetAllStatements(count, fromIndex);
             if (res == null)
             {
                 comonResponse.isError = true;

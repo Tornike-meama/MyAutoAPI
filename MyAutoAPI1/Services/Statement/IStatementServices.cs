@@ -7,7 +7,7 @@ namespace MyAutoAPI1.Services
     public interface IStatementServices
     {
         public Statement GetStatementById(int id);
-        public List<Statement> GetAllStatements();
+        public List<Statement> GetAllStatements(int count, int fromIndex);
         public Statement AddStatement(Statement data);
     }
 }

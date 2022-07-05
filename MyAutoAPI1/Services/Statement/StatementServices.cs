@@ -28,9 +28,13 @@ namespace MyAutoAPI1.Services
             return statement;
         }
 
-        public List<Statement> GetAllStatements()
+        public List<Statement> GetAllStatements(int count, int fromIndex)
         {
-            return _dbContext.Statement.ToList();
+            if(count == 0)
+            {
+                count = 10;
+            }
+            return _dbContext.Statement.Skip(fromIndex).Take(count).ToList();
         }
 
         public Statement GetStatementById(int id)
