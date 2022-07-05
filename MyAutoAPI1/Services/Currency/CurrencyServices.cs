@@ -1,6 +1,8 @@
-﻿using MyAutoAPI1.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using MyAutoAPI1.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MyAutoAPI1.Services.Currency
 {
@@ -12,9 +14,9 @@ namespace MyAutoAPI1.Services.Currency
         {
             _dbContext = dbContext;
         }
-        public List<Models.Currency> GetAllCurrency()
+        public async Task<List<Models.Currency>> GetAllCurrency()
         {
-            return _dbContext.Currencies.ToList();
+            return await _dbContext.Currencies.ToListAsync();
         }
 
         public Models.Currency AddCurrency(Models.Currency data)

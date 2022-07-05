@@ -4,6 +4,7 @@ using MyAutoAPI1.Models;
 using MyAutoAPI1.Services;
 using MyAutoAPI1.Services.Currency;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MyAutoAPI1.Controllers
 {
@@ -20,11 +21,11 @@ namespace MyAutoAPI1.Controllers
 
         [HttpGet]
         [Route("getAll")]
-        public IActionResult GetAllCurrency()
+        public async Task<IActionResult> GetAllCurrency()
         {
             ComonResponse<List<Currency>> comonResponse = new ComonResponse<List<Currency>>();
 
-            var res = _currencyServices.GetAllCurrency();
+            var res = await _currencyServices.GetAllCurrency();
 
             if (res == null)
             {
@@ -39,6 +40,7 @@ namespace MyAutoAPI1.Controllers
 
         [HttpPost]
         [Route("add")]
+
         public IActionResult AddCurrency(Currency currency)
         {
             ComonResponse<Currency> comonResponse = new ComonResponse<Currency>();

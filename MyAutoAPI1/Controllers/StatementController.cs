@@ -35,12 +35,18 @@ namespace MyAutoAPI1.Controllers
             return Ok(comonResponse);
         }
 
+        class StatementModel
+        {
+            public int count { get; set; }
+            public int fromIndex { get; set; }
+        }
+
         [HttpGet]
         [Route("getAll")]
-        public IActionResult GetAllStatements([FromQuery] int count, [FromQuery] int fromIndex)
+        public async Task<IActionResult> GetAllStatements([FromQuery] int count, [FromQuery] int fromIndex)
         {
             ComonResponse<List<Statement>> comonResponse = new ComonResponse<List<Statement>>();
-            var res = _statementService.GetAllStatements(count, fromIndex);
+            var res = await _statementService.GetAllStatements(count, fromIndex);
             if (res == null)
             {
                 comonResponse.isError = true;

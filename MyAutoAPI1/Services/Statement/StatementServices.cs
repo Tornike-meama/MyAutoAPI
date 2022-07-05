@@ -1,4 +1,6 @@
-﻿using MyAutoAPI1.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using MyAutoAPI1.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,30 +18,39 @@ namespace MyAutoAPI1.Services
 
         public Statement AddStatement(Statement data)
         {
-            var statement = new Statement()
+            try
             {
-                Title = data.Title,
-                Description = data.Description,
-                Price = data.Price,
-                CurrencyId = data.CurrencyId,
-            };
-            _dbContext.Statement.Add(statement);
-            _dbContext.SaveChanges();
-            return statement;
+                var statement = new Statement()
+                {
+                    Title = data.Title,
+                    Description = data.Description,
+                    Price = data.Price,
+                    CurrencyId = data.CurrencyId,
+                };
+                _dbContext.Statement.Add(statement);
+                _dbContext.SaveChanges();
+
+                return statement;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
-        public List<Statement> GetAllStatements(int count, int fromIndex)
+        public async Task<List<Statement>> GetAllStatements(int count, int fromIndex)
         {
             if(count == 0)
             {
                 count = 10;
             }
-            return _dbContext.Statement.Skip(fromIndex).Take(count).ToList();
+
+            return await _dbContext.Statement.Skip(fromIndex).Take(count).ToListAsync();
         }
 
         public Statement GetStatementById(int id)
         {
-            return _dbContext.Statement.FirstOrDefault(o => o.Id == id);
+            return  _dbContext.Statement.FirstOrDefault(o => o.Id == id);
         }
     }
 }
