@@ -16,10 +16,12 @@ namespace MyAutoAPI1.Services
             _dbContext = dbContext;
         }
 
-        public Statement AddStatement(Statement data)
+        public async Task<Statement> AddStatement(Statement data)
         {
             try
             {
+                var isCurrency = _dbContext.Currencies.Any(o => o.Id == data.CurrencyId);
+                if(data.CurrencyId < 1 || !isCurrency) return null;
                 var statement = new Statement()
                 {
                     Title = data.Title,
@@ -28,11 +30,10 @@ namespace MyAutoAPI1.Services
                     CurrencyId = data.CurrencyId,
                 };
                 _dbContext.Statement.Add(statement);
-                _dbContext.SaveChanges();
-
-                return statement;
+                await _dbContext.SaveChangesAsync();
+                return statement; 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -40,17 +41,32 @@ namespace MyAutoAPI1.Services
 
         public async Task<List<Statement>> GetAllStatements(int count, int fromIndex)
         {
-            if(count == 0)
+            try
             {
-                count = 10;
-            }
+                if (count == 0)
+                {
+                    count = 10;
+                }
 
-            return await _dbContext.Statement.Skip(fromIndex).Take(count).ToListAsync();
+                return await _dbContext.Statement.Skip(fromIndex).Take(count).ToListAsync();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
-        public Statement GetStatementById(int id)
+        public async Task<Statement> GetStatementById(int id)
         {
-            return  _dbContext.Statement.FirstOrDefault(o => o.Id == id);
+            try
+            {
+                return await _dbContext.Statement.FirstOrDefaultAsync(o => o.Id == id);
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
         }
     }
 }
