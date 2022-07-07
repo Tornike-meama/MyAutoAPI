@@ -25,7 +25,7 @@ namespace MyAutoAPI1.Controllers
         public async Task<IActionResult> GetAllStatements([FromQuery] StatementsQuery queries)
         {
 
-            List<Statement> res = await _statementService.GetAllStatements(queries.count, queries.fromIndex);
+            List<Statement> res = await _statementService.GetAllStatements(queries.Count, queries.FromIndex);
             return Ok(DataResponse<List<Statement>>.ReturnResponse(res));
         }
 
