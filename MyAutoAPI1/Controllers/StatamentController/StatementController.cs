@@ -5,7 +5,7 @@ using MyAutoAPI1.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace MyAutoAPI1.Controllers
+namespace MyAutoAPI1.Controllers.StatamentController
 {
     [Route("api/statement")]
     [ApiController]
@@ -20,11 +20,11 @@ namespace MyAutoAPI1.Controllers
 
         [HttpGet]
         [Route("getById/{id}")]
-        public IActionResult GetStatementById([FromRoute]int id)
+        public async Task<IActionResult> GetStatementById([FromRoute] int id)
         {
             ComonResponse<Statement> comonResponse = new ComonResponse<Statement>();
-            var res = _statementService.GetStatementById(id);
-            if(res == null)
+            var res = await _statementService.GetStatementById(id);
+            if (res == null)
             {
                 comonResponse.isError = true;
                 comonResponse.data = null;
@@ -43,10 +43,10 @@ namespace MyAutoAPI1.Controllers
 
         [HttpGet]
         [Route("getAll")]
-        public async Task<IActionResult> GetAllStatements([FromQuery] int count, [FromQuery] int fromIndex)
+        public async Task<IActionResult> GetAllStatements([FromQuery] GetStatementsQuery queries)
         {
             ComonResponse<List<Statement>> comonResponse = new ComonResponse<List<Statement>>();
-            var res = await _statementService.GetAllStatements(count, fromIndex);
+            var res = await _statementService.GetAllStatements(queries.count, queries.fromIndex);
             if (res == null)
             {
                 comonResponse.isError = true;
@@ -60,11 +60,11 @@ namespace MyAutoAPI1.Controllers
 
         [HttpPost]
         [Route("add")]
-        public IActionResult AddStatement([FromBody] Statement statement)
+        public async Task<IActionResult> AddStatement([FromBody] Statement statement)
         {
             ComonResponse<Statement> comonResponse = new ComonResponse<Statement>();
 
-            var res = _statementService.AddStatement(statement);
+            var res = await _statementService.AddStatement(statement);
             if (res == null)
             {
                 comonResponse.isError = true;
