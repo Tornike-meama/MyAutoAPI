@@ -51,6 +51,7 @@ namespace MyAutoAPI1.Controllers.StatamentController
             {
                 comonResponse.isError = true;
                 comonResponse.data = null;
+                comonResponse.message = "items not found";
                 return NotFound(comonResponse);
             }
             comonResponse.isError = false;

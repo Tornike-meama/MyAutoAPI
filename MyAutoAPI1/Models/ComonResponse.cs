@@ -2,7 +2,8 @@
 {
 	public class ComonResponse<T>
 	{
-		public bool isError { get; set; }
+        public string message { get; set; }
+        public bool isError { get; set; }
 		public T data { get; set; }
 	}
 }
