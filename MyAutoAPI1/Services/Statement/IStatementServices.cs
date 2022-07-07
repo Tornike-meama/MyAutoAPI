@@ -9,5 +9,6 @@ namespace MyAutoAPI1.Services
         public Task<Statement> GetStatementById(int id);
         public Task<List<Statement>> GetAllStatements(int count, int fromIndex);
         public Task<Statement> AddStatement(Statement data);
+        public Task<Statement> UpdateStatement(Statement data);
     }
 }

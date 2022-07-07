@@ -39,6 +39,34 @@ namespace MyAutoAPI1.Services
             }
         }
 
+        public async Task<Statement> UpdateStatement(Statement data)
+        {
+            try
+            {
+                var isCurrency = _dbContext.Currencies.Any(o => o.Id == data.CurrencyId);
+                if (data.CurrencyId < 1 || !isCurrency)
+                {
+                    return null;
+                }
+                var statement = _dbContext.Statement.FirstOrDefault(o => o.Id == data.Id);
+                if(statement == null)
+                {
+                    return null;
+                }
+                statement.Title = data.Title;
+                statement.Description = data.Description;
+                statement.Price = data.Price;
+                statement.CurrencyId = data.CurrencyId;
+
+                await _dbContext.SaveChangesAsync();
+                return data;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         public async Task<List<Statement>> GetAllStatements(int count, int fromIndex)
         {
             try

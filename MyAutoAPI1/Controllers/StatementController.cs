@@ -24,6 +24,7 @@ namespace MyAutoAPI1.Controllers
         [Route("getAll")]
         public async Task<IActionResult> GetAllStatements([FromQuery] StatementsQuery queries)
         {
+
             List<Statement> res = await _statementService.GetAllStatements(queries.count, queries.fromIndex);
             return Ok(DataResponse<List<Statement>>.ReturnResponse(res));
         }
@@ -41,6 +42,14 @@ namespace MyAutoAPI1.Controllers
         public async Task<IActionResult> AddStatement([FromBody] Statement statement)
         {
             Statement res = await _statementService.AddStatement(statement);
+            return Ok(DataResponse<Statement>.ReturnResponse(res));
+        }
+
+        [HttpPost]
+        [Route("update")]
+        public async Task<IActionResult> UpdateStatement([FromBody] Statement statement)
+        {
+            Statement res = await _statementService.UpdateStatement(statement);
             return Ok(DataResponse<Statement>.ReturnResponse(res));
         }
     }
