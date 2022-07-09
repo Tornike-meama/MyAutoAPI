@@ -10,7 +10,7 @@ namespace MyAutoAPI1.Controllers
 {
     [Route("api/currency")]
     [ApiController]
-    public class CurrencyController : ControllerBase
+    public class CurrencyController : BaseController.BaseController
     {
         private readonly ICurrencyServices _currencyServices;
 
@@ -23,37 +23,17 @@ namespace MyAutoAPI1.Controllers
         [Route("getAll")]
         public async Task<IActionResult> GetAllCurrency()
         {
-            ComonResponse<List<Currency>> comonResponse = new ComonResponse<List<Currency>>();
-
             var res = await _currencyServices.GetAllCurrency();
-
-            if (res == null)
-            {
-                comonResponse.isError = true;
-                comonResponse.data = default;
-                return BadRequest(comonResponse);
-            }
-            comonResponse.isError = false;
-            comonResponse.data = res;
-            return Ok(comonResponse);
+            return DataResponse(res);
         }
 
         [HttpPost]
         [Route("add")]
 
-        public IActionResult AddCurrency(Currency currency)
+        public async Task<IActionResult> AddCurrency(Currency currency)
         {
-            ComonResponse<Currency> comonResponse = new ComonResponse<Currency>();
-
-            var res = _currencyServices.AddCurrency(currency);
-
-            if(res == null)
-            {
-                comonResponse.isError = true;
-                comonResponse.data = null;
-                return BadRequest(comonResponse);
-            }
-            return Ok(comonResponse);
+            var res = await _currencyServices.AddCurrency(currency);
+            return DataResponse(res);
         }
     }
 }

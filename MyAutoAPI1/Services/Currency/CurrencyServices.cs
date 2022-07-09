@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyAutoAPI1.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,24 +15,53 @@ namespace MyAutoAPI1.Services.Currency
         {
             _dbContext = dbContext;
         }
-        public async Task<List<Models.Currency>> GetAllCurrency()
+
+        public async Task<ComonResponse<List<Models.Currency>>> GetAllCurrency()
         {
-            return await _dbContext.Currencies.ToListAsync();
+            try
+            {
+                var res = await _dbContext.Currencies.ToListAsync();
+                return new ComonResponse<List<Models.Currency>>(res);
+            }
+            catch (Exception ex)
+            {
+                return new ComonResponse<List<Models.Currency>>(ex.Message);
+            }
         }
 
-        public Models.Currency AddCurrency(Models.Currency data)
+        public async Task<ComonResponse<Models.Currency>> GetCurrencyById(int id)
         {
-            if(data == null) return null;
-
-            var currency = new Models.Currency()
+            try
             {
-                Name = data.Name,
-                ShortName = data.ShortName,
-                Symbol = data.Symbol,
-            };
-            _dbContext.Currencies.Add(currency);
-            _dbContext.SaveChanges();
-            return currency;
+                var res = await _dbContext.Currencies.FirstOrDefaultAsync(o => o.Id == id);
+                return new ComonResponse<Models.Currency>(res);
+            }
+            catch (Exception ex)
+            {
+                return new ComonResponse<Models.Currency>(ex.Message);
+            }
+        }
+
+        public async Task<ComonResponse<Models.Currency>> AddCurrency(Models.Currency data)
+        {
+            try
+            {
+                if (data == null) return null;
+
+                var currency = new Models.Currency()
+                {
+                    Name = data.Name,
+                    ShortName = data.ShortName,
+                    Symbol = data.Symbol,
+                };
+                _dbContext.Currencies.Add(currency);
+                await _dbContext.SaveChangesAsync();
+                return new ComonResponse<Models.Currency>(currency);
+            }
+            catch (Exception ex)
+            {
+                return new ComonResponse<Models.Currency>(ex.Message);
+            }
         }
 
     }
