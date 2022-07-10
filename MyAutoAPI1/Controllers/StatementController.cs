@@ -40,6 +40,7 @@ namespace MyAutoAPI1.Controllers
             return DataResponse(res);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         [Route("add")]
         public async Task<IActionResult> AddStatement([FromBody] Statement statement)
@@ -48,6 +49,7 @@ namespace MyAutoAPI1.Controllers
             return DataResponse(res);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         [Route("update")]
         public async Task<IActionResult> UpdateStatement([FromBody] Statement statement)

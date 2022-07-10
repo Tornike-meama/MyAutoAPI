@@ -10,6 +10,8 @@ namespace MyAutoAPI1.Models
         public int Price { get; set; }
         [Required]
         public int CurrencyId { get; set; }
+        [Required]
+        public int Creator { get; set; }
 
     }
 }

@@ -3,6 +3,7 @@ using MyAutoAPI1.Models;
 using MyAutoAPI1.Services.Currency;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -58,6 +59,12 @@ namespace MyAutoAPI1.Services
             {
                 var currentCurrency = await _currencyServices.GetCurrencyById(data.CurrencyId);
                 if (data.CurrencyId < 1 || currentCurrency.IsError) new ComonResponse<Statement>("Can't find Currency");
+
+                //var stream = "[encoded jwt]";
+                //var handler = new JwtSecurityTokenHandler();
+                //var jsonToken = handler.ReadToken(stream);
+                //var tokenS = jsonToken as JwtSecurityToken;
+
                 var statement = new Statement()
                 {
                     Title = data.Title,
