@@ -23,7 +23,12 @@ namespace MyAutoAPI1.Controllers
         public async Task<IActionResult> Register([FromBody] RegistrationRequest request)
         {
             var res = await _identityServices.RegisterAsync(request.Email, request.Password, request.Name);
-            return DataResponse(res);
+
+            if(res.IsError)
+            {
+                return BadRequest(res);
+            }
+            return Ok(res);
         }
 
     }

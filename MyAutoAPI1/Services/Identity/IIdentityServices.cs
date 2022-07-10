@@ -6,6 +6,6 @@ namespace MyAutoAPI1.Services.Identity
 {
     public interface IIdentityServices
     {
-        public Task<ComonResponse<AuthResponse>> RegisterAsync(string email, string password, string name);
+        public Task<AuthResponse> RegisterAsync(string email, string password, string name);
     }
 }

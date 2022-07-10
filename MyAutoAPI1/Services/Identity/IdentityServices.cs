@@ -22,7 +22,7 @@ namespace MyAutoAPI1.Services.Identity
             _jwtSettings = jwtSettings;
         }
 
-        public async Task<ComonResponse<AuthResponse>> RegisterAsync(string email, string password, string name)
+        public async Task<AuthResponse> RegisterAsync(string email, string password, string name)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace MyAutoAPI1.Services.Identity
 
                 if(isUser != null)
                 {
-                    return new ComonResponse<AuthResponse>("user alrady registered!");
+                    return new AuthResponse("user alrady registered!");
                 }
 
                 var newUser = new IdentityUser()
@@ -42,7 +42,7 @@ namespace MyAutoAPI1.Services.Identity
 
                 if(!createdUser.Succeeded)
                 {
-                    return new ComonResponse<AuthResponse>("user can't register!");
+                    return new AuthResponse("user can't register!");
                 }
 
                 var tokenHandler = new JwtSecurityTokenHandler();
@@ -62,19 +62,15 @@ namespace MyAutoAPI1.Services.Identity
 
                 var token = tokenHandler.CreateToken(tokenDescriptor);
 
-                return new ComonResponse<AuthResponse>(new AuthResponse() { Error = "", Token = token.ToString()});
+                return new AuthResponse(tokenHandler.WriteToken(token), "Success Loged In");
             }
             catch (Exception ex)
             {
-
-                return new ComonResponse<AuthResponse>(ex.Message);
+                return new AuthResponse(ex.Message);
             }
         }
+
       
     }
-    public class AuthResponse
-    {
-        public string Error { get; set; }
-        public string Token { get; set; }
-    }
+   
 }
