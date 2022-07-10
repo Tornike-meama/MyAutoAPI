@@ -8,7 +8,8 @@ namespace MyAutoAPI1.Services
     {
         public Task<ComonResponse<List<Statement>>> GetAllStatements(int count, int fromIndex);
         public Task<ComonResponse<Statement>> GetStatementById(int id);
-        public Task<ComonResponse<Statement>> AddStatement(Statement data);
+        public Task<ComonResponse<List<Statement>>> GetStatementByUserId(string userId);
+        public Task<ComonResponse<Statement>> AddStatement(Statement data, string token);
         public Task<ComonResponse<Statement>> UpdateStatement(Statement data);
     }
 }

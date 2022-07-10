@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using MyAutoAPI1.Controllers.StatamentController;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Net.Http;
 
 namespace MyAutoAPI1.Controllers
 {
@@ -22,8 +23,6 @@ namespace MyAutoAPI1.Controllers
             _statementService = statementServices;
         }
 
-        //TODO: add for test authorize attirbiute remove in the future
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet]
         [Route("getAll")]
         public async Task<IActionResult> GetAllStatements([FromQuery] StatementsQuery queries)
@@ -40,12 +39,20 @@ namespace MyAutoAPI1.Controllers
             return DataResponse(res);
         }
 
+        [HttpGet]
+        [Route("getByUserId")]
+        public async Task<IActionResult> GetStatementByUserId([FromQuery] string userId)
+        {
+            var res = await _statementService.GetStatementByUserId(userId);
+            return DataResponse(res);
+        }
+
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         [Route("add")]
-        public async Task<IActionResult> AddStatement([FromBody] Statement statement)
+        public async Task<IActionResult> AddStatement([FromBody] Statement statement, [FromHeader] string Authorization)
         {
-            var res = await _statementService.AddStatement(statement);
+            var res = await _statementService.AddStatement(statement, Authorization);
             return DataResponse(res);
         }
 

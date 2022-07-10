@@ -11,7 +11,7 @@ namespace MyAutoAPI1.Models
         [Required]
         public int CurrencyId { get; set; }
         [Required]
-        public int Creator { get; set; }
+        public string Creator { get; set; }
 
     }
 }

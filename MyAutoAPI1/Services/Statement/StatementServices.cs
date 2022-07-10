@@ -40,7 +40,7 @@ namespace MyAutoAPI1.Services
             }
         }
 
-        public async Task<ComonResponse<Statement>> GetStatementById(int id)
+        public async Task<ComonResponse<Statement>>GetStatementById(int id)
         {
             try
             {
@@ -52,18 +52,35 @@ namespace MyAutoAPI1.Services
                 return new ComonResponse<Statement>(ex.Message);
             }
         }
+        public async Task<ComonResponse<List<Statement>>>GetStatementByUserId(string userId)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(userId))
+                {
+                    return new ComonResponse<List<Statement>>("Cann't provide userId");
+                }
 
-        public async Task<ComonResponse<Statement>> AddStatement(Statement data)
+                var res = await _dbContext.Statement.Where(o => o.Creator.CompareTo(userId) == 0).ToListAsync();
+
+                return new ComonResponse<List<Statement>>(res);
+            }
+            catch (Exception ex)
+            {
+                return new ComonResponse<List<Statement>>(ex.Message);
+            }
+        }
+        public async Task<ComonResponse<Statement>> AddStatement(Statement data, string token)
         {
             try
             {
                 var currentCurrency = await _currencyServices.GetCurrencyById(data.CurrencyId);
                 if (data.CurrencyId < 1 || currentCurrency.IsError) new ComonResponse<Statement>("Can't find Currency");
 
-                //var stream = "[encoded jwt]";
-                //var handler = new JwtSecurityTokenHandler();
-                //var jsonToken = handler.ReadToken(stream);
-                //var tokenS = jsonToken as JwtSecurityToken;
+                var tokenArr = token.Split(" ");
+                var handler = new JwtSecurityTokenHandler();
+                var jsonToken = handler.ReadToken(tokenArr[1]);
+                var tokenData = jsonToken as JwtSecurityToken;
 
                 var statement = new Statement()
                 {
@@ -71,10 +88,13 @@ namespace MyAutoAPI1.Services
                     Description = data.Description,
                     Price = data.Price,
                     CurrencyId = data.CurrencyId,
+                    Creator = data.Creator
                 };
+
                 _dbContext.Statement.Add(statement);
                 await _dbContext.SaveChangesAsync();
-                return new ComonResponse<Statement>(statement); 
+
+                return new ComonResponse<Statement>(data); 
             }
             catch (Exception ex)
             {
@@ -110,5 +130,6 @@ namespace MyAutoAPI1.Services
             }
         }
 
+       
     }
 }
