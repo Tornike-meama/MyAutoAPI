@@ -6,7 +6,8 @@ using MyAutoAPI1.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MyAutoAPI1.Controllers.StatamentController;
-
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace MyAutoAPI1.Controllers
 {
@@ -21,6 +22,8 @@ namespace MyAutoAPI1.Controllers
             _statementService = statementServices;
         }
 
+        //TODO: add for test authorize attirbiute remove in the future
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet]
         [Route("getAll")]
         public async Task<IActionResult> GetAllStatements([FromQuery] StatementsQuery queries)

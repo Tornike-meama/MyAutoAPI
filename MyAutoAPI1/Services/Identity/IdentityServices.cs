@@ -22,6 +22,32 @@ namespace MyAutoAPI1.Services.Identity
             _jwtSettings = jwtSettings;
         }
 
+        public async Task<AuthResponse> LoginAsync(string email, string password)
+        {
+            try
+            {
+                var authUser = await _userManager.FindByEmailAsync(email);
+
+                if(authUser == null)
+                {
+                    return new AuthResponse("user is not register!");
+                }
+
+                var isValidPassword = await _userManager.CheckPasswordAsync(authUser, password);
+
+                if(!isValidPassword)
+                {
+                    return new AuthResponse("user or password is ivalid!");
+                }
+
+                return GenerateAuthResultForUser(authUser);
+            }
+            catch (Exception ex)
+            {
+                return new AuthResponse(ex.Message);
+            }
+        }
+
         public async Task<AuthResponse> RegisterAsync(string email, string password, string name)
         {
             try
@@ -38,6 +64,7 @@ namespace MyAutoAPI1.Services.Identity
                     Email = email,
                     UserName = name,
                 };
+
                 var createdUser = await _userManager.CreateAsync(newUser, password);
 
                 if(!createdUser.Succeeded)
@@ -45,24 +72,7 @@ namespace MyAutoAPI1.Services.Identity
                     return new AuthResponse("user can't register!");
                 }
 
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(new[]
-                    {
-                        new Claim(JwtRegisteredClaimNames.Sub, newUser.Email),
-                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                        new Claim(JwtRegisteredClaimNames.Sub, newUser.Email),
-                        new Claim("id", newUser.Id)
-                    }),
-                    Expires = DateTime.UtcNow.AddHours(2),
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
-                };
-
-                var token = tokenHandler.CreateToken(tokenDescriptor);
-
-                return new AuthResponse(tokenHandler.WriteToken(token), "Success Loged In");
+                return GenerateAuthResultForUser(newUser);
             }
             catch (Exception ex)
             {
@@ -71,6 +81,28 @@ namespace MyAutoAPI1.Services.Identity
         }
 
       
+        private AuthResponse GenerateAuthResultForUser(IdentityUser newUser)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[]
+                {
+                        new Claim(JwtRegisteredClaimNames.Sub, newUser.Email),
+                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                        new Claim(JwtRegisteredClaimNames.Sub, newUser.Email),
+                        new Claim("id", newUser.Id)
+                    }),
+                Expires = DateTime.UtcNow.AddHours(2),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return new AuthResponse(tokenHandler.WriteToken(token), "Success Loged In");
+        }
+
     }
    
 }

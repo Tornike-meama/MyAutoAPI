@@ -31,5 +31,19 @@ namespace MyAutoAPI1.Controllers
             return Ok(res);
         }
 
+
+        [HttpPost]
+        [Route("login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
+        {
+            var res = await _identityServices.LoginAsync(request.Email, request.Password);
+
+            if (res.IsError)
+            {
+                return BadRequest(res);
+            }
+            return Ok(res);
+        }
+
     }
 }
