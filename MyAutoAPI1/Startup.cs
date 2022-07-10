@@ -14,12 +14,16 @@ using MyAutoAPI1.Models;
 using MyAutoAPI1.Options;
 using MyAutoAPI1.Services;
 using MyAutoAPI1.Services.Currency;
+using MyAutoAPI1.Services.Identity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace MyAutoAPI1
 {
@@ -40,6 +44,8 @@ namespace MyAutoAPI1
             JwtSettings jwtSettings = new JwtSettings();
             Configuration.Bind(nameof(jwtSettings), jwtSettings);
             services.AddSingleton(jwtSettings);
+
+            services.AddScoped<IIdentityServices, IdentityServices>();
 
             services.AddAuthentication(x =>
             {
@@ -96,6 +102,7 @@ namespace MyAutoAPI1
             services.AddTransient<IStatementServices, StatementServices>();
             services.AddTransient<ICurrencyServices, CurrencyServices>();
             services.AddDbContext<MyDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<MyDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
