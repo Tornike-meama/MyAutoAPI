@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyAutoAPI1.Models;
+using MyAutoAPI1.Models.Responses;
 using MyAutoAPI1.Services.Currency;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace MyAutoAPI1.Services
         }
 
 
-        public async Task<ComonResponse<List<Statement>>> GetAllStatements(int count, int fromIndex)
+        public async Task<IComonResponse<List<Statement>>> GetAllStatements(int count, int fromIndex)
         {
             try
             {
@@ -36,29 +37,33 @@ namespace MyAutoAPI1.Services
             }
             catch (Exception ex)
             {
-                return new ComonResponse<List<Statement>>(ex.Message);
+                return new BadRequest<List<Statement>>(ex.Message);
             }
         }
 
-        public async Task<ComonResponse<Statement>>GetStatementById(int id)
+        public async Task<IComonResponse<Statement>>GetStatementById(int id)
         {
             try
             {
                 var res = await _dbContext.Statement.FirstOrDefaultAsync(o => o.Id == id);
+                if(res == null)
+                {
+                    return new NotFound<Statement>("Not found");
+                }
                 return new ComonResponse<Statement>(res);
             }
             catch (Exception ex)
             {
-                return new ComonResponse<Statement>(ex.Message);
+                return new BadRequest<Statement>(ex.Message);
             }
         }
-        public async Task<ComonResponse<List<Statement>>>GetStatementByUserId(string userId)
+        public async Task<IComonResponse<List<Statement>>>GetStatementByUserId(string userId)
         {
             try
             {
                 if (string.IsNullOrEmpty(userId))
                 {
-                    return new ComonResponse<List<Statement>>("Cann't provide userId");
+                    return new BadRequest<List<Statement>>("you don't provide userId");
                 }
 
                 var res = await _dbContext.Statement.Where(o => o.Creator.CompareTo(userId) == 0).ToListAsync();
@@ -67,15 +72,15 @@ namespace MyAutoAPI1.Services
             }
             catch (Exception ex)
             {
-                return new ComonResponse<List<Statement>>(ex.Message);
+                return new BadRequest<List<Statement>>(ex.Message);
             }
         }
-        public async Task<ComonResponse<Statement>> AddStatement(Statement data, string token)
+        public async Task<IComonResponse<Statement>> AddStatement(Statement data, string token)
         {
             try
             {
                 var currentCurrency = await _currencyServices.GetCurrencyById(data.CurrencyId);
-                if (data.CurrencyId < 1 || currentCurrency.IsError) new ComonResponse<Statement>("Can't find Currency");
+                if (data.CurrencyId < 1 || currentCurrency.IsError) new NotFound<Statement>("Can't find Currency");
 
                 var tokenArr = token.Split(" ");
                 var handler = new JwtSecurityTokenHandler();
@@ -98,23 +103,23 @@ namespace MyAutoAPI1.Services
             }
             catch (Exception ex)
             {
-                return new ComonResponse<Statement>(ex.Message);
+                return new BadRequest<Statement>(ex.Message);
             }
         }
 
-        public async Task<ComonResponse<Statement>> UpdateStatement(Statement data)
+        public async Task<IComonResponse<Statement>> UpdateStatement(Statement data)
         {
             try
             {
                 var currentCurrency = await _currencyServices.GetCurrencyById(data.CurrencyId);
                 if (data.CurrencyId < 1 || currentCurrency.IsError)
                 {
-                    return new ComonResponse<Statement>("Currency not found");
+                    return new NotFound<Statement>("Currency not found");
                 }
                 var statement = _dbContext.Statement.FirstOrDefault(o => o.Id == data.Id);
                 if(statement == null)
                 {
-                    return new ComonResponse<Statement>("Statement not found invalid ID");
+                    return new NotFound<Statement>("Statement not found invalid ID");
                 }
                 statement.Title = data.Title;
                 statement.Description = data.Description;
@@ -126,7 +131,7 @@ namespace MyAutoAPI1.Services
             }
             catch (Exception ex)
             {
-                return new ComonResponse<Statement>(ex.Message);
+                return new BadRequest<Statement>(ex.Message);
             }
         }
 

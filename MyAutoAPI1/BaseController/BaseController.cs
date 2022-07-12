@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MyAutoAPI1.Models;
+using MyAutoAPI1.Models.Responses;
 using System.Threading.Tasks;
 
 namespace MyAutoAPI1.BaseController
@@ -9,11 +9,15 @@ namespace MyAutoAPI1.BaseController
     {
         public BaseController() {}
 
-        public IActionResult DataResponse<T>(ComonResponse<T> response)
+        public IActionResult DataResponse<T>(IComonResponse<T> response)
         {
-            if(response.IsError)
+            if(response is BadRequest<T>)
             {
                 return BadRequest(response);
+            }
+            if(response is NotFound<T>)
+            {
+                return NotFound(response);
             }
             return Ok(response);
         }

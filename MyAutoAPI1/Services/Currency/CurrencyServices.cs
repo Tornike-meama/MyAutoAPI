@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyAutoAPI1.Models;
+using MyAutoAPI1.Models.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace MyAutoAPI1.Services.Currency
             _dbContext = dbContext;
         }
 
-        public async Task<ComonResponse<List<Models.Currency>>> GetAllCurrency()
+        public async Task<IComonResponse<List<Models.Currency>>> GetAllCurrency()
         {
             try
             {
@@ -25,24 +26,28 @@ namespace MyAutoAPI1.Services.Currency
             }
             catch (Exception ex)
             {
-                return new ComonResponse<List<Models.Currency>>(ex.Message);
+                return new BadRequest<List<Models.Currency>>(ex.Message);
             }
         }
 
-        public async Task<ComonResponse<Models.Currency>> GetCurrencyById(int id)
+        public async Task<IComonResponse<Models.Currency>> GetCurrencyById(int id)
         {
             try
             {
                 var res = await _dbContext.Currencies.FirstOrDefaultAsync(o => o.Id == id);
+                if(res == null)
+                {
+                    return new NotFound<Models.Currency>("Not Found");
+                }
                 return new ComonResponse<Models.Currency>(res);
             }
             catch (Exception ex)
             {
-                return new ComonResponse<Models.Currency>(ex.Message);
+                return new BadRequest<Models.Currency>(ex.Message);
             }
         }
 
-        public async Task<ComonResponse<Models.Currency>> AddCurrency(Models.Currency data)
+        public async Task<IComonResponse<Models.Currency>> AddCurrency(Models.Currency data)
         {
             try
             {
@@ -60,7 +65,7 @@ namespace MyAutoAPI1.Services.Currency
             }
             catch (Exception ex)
             {
-                return new ComonResponse<Models.Currency>(ex.Message);
+                return new BadRequest<Models.Currency>(ex.Message);
             }
         }
 
