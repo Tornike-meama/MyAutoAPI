@@ -1,6 +1,8 @@
-﻿namespace MyAutoAPI1.Models
+﻿using MyAutoAPI1.Models.Responses;
+
+namespace MyAutoAPI1.Models
 {
-    public class AuthResponse
+    public class AuthResponse<T> : IComonResponse<T>
     {
         public AuthResponse(string token, string message)
         {

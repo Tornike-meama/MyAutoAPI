@@ -2,6 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using MyAutoAPI1.Controllers.GetQueries;
 using MyAutoAPI1.Models;
+using MyAutoAPI1.Models.Responses;
 using MyAutoAPI1.Options;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -22,7 +23,7 @@ namespace MyAutoAPI1.Services.Identity
             _jwtSettings = jwtSettings;
         }
 
-        public async Task<AuthResponse> LoginAsync(string email, string password)
+        public async Task<IComonResponse<string>> LoginAsync(string email, string password)
         {
             try
             {
@@ -30,25 +31,25 @@ namespace MyAutoAPI1.Services.Identity
 
                 if(authUser == null)
                 {
-                    return new AuthResponse("user is not register!");
+                    return new NotFound<string>("user is not register!");
                 }
 
                 var isValidPassword = await _userManager.CheckPasswordAsync(authUser, password);
 
                 if(!isValidPassword)
                 {
-                    return new AuthResponse("user or password is ivalid!");
+                    return new BadRequest<string>("user or password is ivalid!");
                 }
 
                 return GenerateAuthResultForUser(authUser);
             }
             catch (Exception ex)
             {
-                return new AuthResponse(ex.Message);
+                return new BadRequest<string>(ex.Message);
             }
         }
 
-        public async Task<AuthResponse> RegisterAsync(string email, string password, string name)
+        public async Task<IComonResponse<string>> RegisterAsync(string email, string password, string name)
         {
             try
             {
@@ -56,7 +57,7 @@ namespace MyAutoAPI1.Services.Identity
 
                 if(isUser != null)
                 {
-                    return new AuthResponse("user alrady registered!");
+                    return new BadRequest<string>("user alrady registered!");
                 }
 
                 var newUser = new IdentityUser()
@@ -69,19 +70,19 @@ namespace MyAutoAPI1.Services.Identity
 
                 if(!createdUser.Succeeded)
                 {
-                    return new AuthResponse("user can't register!");
+                    return new BadRequest<string>("user can't register!");
                 }
 
                 return GenerateAuthResultForUser(newUser);
             }
             catch (Exception ex)
             {
-                return new AuthResponse(ex.Message);
+                return new BadRequest<string>(ex.Message);
             }
         }
 
       
-        private AuthResponse GenerateAuthResultForUser(IdentityUser newUser)
+        private IComonResponse<string> GenerateAuthResultForUser(IdentityUser newUser)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
@@ -100,7 +101,7 @@ namespace MyAutoAPI1.Services.Identity
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return new AuthResponse(tokenHandler.WriteToken(token), "Success Loged In");
+            return new AuthResponse<string>(tokenHandler.WriteToken(token), "Success Loged In");
         }
 
     }
