@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MyAutoAPI1.Controllers.GetBody.Statement;
 using MyAutoAPI1.Models;
 using MyAutoAPI1.Models.Responses;
 using MyAutoAPI1.Services.Currency;
@@ -75,17 +76,17 @@ namespace MyAutoAPI1.Services
                 return new BadRequest<List<Statement>>(ex.Message);
             }
         }
-        public async Task<IComonResponse<Statement>> AddStatement(Statement data, string token)
+        public async Task<IComonResponse<Statement>> AddStatement(AddStatementModel data, string creatorId)
         {
             try
             {
                 var currentCurrency = await _currencyServices.GetCurrencyById(data.CurrencyId);
-                if (data.CurrencyId < 1 || currentCurrency.IsError) new NotFound<Statement>("Can't find Currency");
+                if (data.CurrencyId < 1 || currentCurrency.IsError) new NotFound<AddStatementModel>("Can't find Currency");
 
-                var tokenArr = token.Split(" ");
-                var handler = new JwtSecurityTokenHandler();
-                var jsonToken = handler.ReadToken(tokenArr[1]);
-                var tokenData = jsonToken as JwtSecurityToken;
+                //var tokenArr = token.Split(" ");
+                //var handler = new JwtSecurityTokenHandler();
+                //var jsonToken = handler.ReadToken(tokenArr[1]);
+                //var tokenData = jsonToken as JwtSecurityToken;
 
                 var statement = new Statement()
                 {
@@ -93,13 +94,13 @@ namespace MyAutoAPI1.Services
                     Description = data.Description,
                     Price = data.Price,
                     CurrencyId = data.CurrencyId,
-                    Creator = data.Creator
+                    Creator = creatorId
                 };
 
                 _dbContext.Statement.Add(statement);
                 await _dbContext.SaveChangesAsync();
 
-                return new ComonResponse<Statement>(data); 
+                return new ComonResponse<Statement>(statement); 
             }
             catch (Exception ex)
             {

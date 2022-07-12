@@ -9,6 +9,8 @@ using MyAutoAPI1.Controllers.StatamentController;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Net.Http;
+using System.Security.Claims;
+using MyAutoAPI1.Controllers.GetBody.Statement;
 
 namespace MyAutoAPI1.Controllers
 {
@@ -50,9 +52,10 @@ namespace MyAutoAPI1.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         [Route("add")]
-        public async Task<IActionResult> AddStatement([FromBody] Statement statement, [FromHeader] string Authorization)
+        public async Task<IActionResult> AddStatement([FromBody] AddStatementModel statement)
         {
-            var res = await _statementService.AddStatement(statement, Authorization);
+            var userId =  User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var res = await _statementService.AddStatement(statement, userId);
             return DataResponse(res);
         }
 
