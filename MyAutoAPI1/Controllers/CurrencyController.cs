@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MyAutoAPI1.Controllers.GetBody.Currency;
 using MyAutoAPI1.Models;
 using MyAutoAPI1.Services;
 using MyAutoAPI1.Services.Currency;
@@ -37,10 +38,17 @@ namespace MyAutoAPI1.Controllers
 
         [HttpPost]
         [Route("add")]
-
-        public async Task<IActionResult> AddCurrency([FromBody] Currency currency)
+        public async Task<IActionResult> AddCurrency([FromBody] AddCurrencyModel currency)
         {
             var res = await _currencyServices.AddCurrencyAsync(currency);
+            return DataResponse(res);
+        }
+
+        [HttpPost]
+        [Route("update")]
+        public async Task<IActionResult> UpdateCurrency([FromBody] UpdateCurrencyModel currency)
+        {
+            var res = await _currencyServices.UpdateCurrencyAsync(currency);
             return DataResponse(res);
         }
     }
