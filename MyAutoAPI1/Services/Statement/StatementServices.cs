@@ -81,8 +81,8 @@ namespace MyAutoAPI1.Services
                 var isUser = _dbContext.Users.Any(o => o.Id == creatorId);
                 if(!isUser) new NotFound<AddStatementModel>("Can't find Creator User");
 
-                var currentCurrency = await _currencyServices.GetCurrencyById(data.CurrencyId);
-                if (data.CurrencyId < 1 || currentCurrency.IsError) new NotFound<AddStatementModel>("Can't find Currency");
+                var currentCurrency = await _currencyServices.GetCurrencyByIdAsync(data.CurrencyId);
+                if (currentCurrency.IsError) return new NotFound<Statement>("Can't find Currency");
 
                 var statement = new Statement()
                 {
@@ -107,7 +107,7 @@ namespace MyAutoAPI1.Services
         {
             try
             {
-                var currentCurrency = await _currencyServices.GetCurrencyById(data.CurrencyId);
+                var currentCurrency = await _currencyServices.GetCurrencyByIdAsync(data.CurrencyId);
                 if (data.CurrencyId < 1 || currentCurrency.IsError)
                 {
                     return new NotFound<Statement>("Currency not found");

@@ -27,10 +27,18 @@ namespace MyAutoAPI1.Controllers
             return DataResponse(res);
         }
 
+        [HttpGet]
+        [Route("getById")]
+        public async Task<IActionResult> GetCurrencyByI([FromQuery] int id)
+        {
+            var res = await _currencyServices.GetCurrencyByIdAsync(id);
+            return DataResponse(res);
+        }
+
         [HttpPost]
         [Route("add")]
 
-        public async Task<IActionResult> AddCurrency(Currency currency)
+        public async Task<IActionResult> AddCurrency([FromBody] Currency currency)
         {
             var res = await _currencyServices.AddCurrencyAsync(currency);
             return DataResponse(res);
