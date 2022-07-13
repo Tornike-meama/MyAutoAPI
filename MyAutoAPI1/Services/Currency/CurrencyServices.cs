@@ -22,7 +22,7 @@ namespace MyAutoAPI1.Services.Currency
         {
             try
             {
-                var res = await _dbContext.Currencies.ToListAsync();
+                var res = await _dbContext.Currencies.ToListAsync(); 
                 return new ComonResponse<List<Models.Currency>>(res);
             }
             catch (Exception ex)
