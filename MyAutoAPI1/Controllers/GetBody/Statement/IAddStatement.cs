@@ -1,6 +1,6 @@
 ﻿namespace MyAutoAPI1.Controllers.GetBody.Statement
 {
-    public class AddStatementModel
+    public class AddCurrencyModel
     {
         public string Title { get; set; }
         public string Description { get; set; }

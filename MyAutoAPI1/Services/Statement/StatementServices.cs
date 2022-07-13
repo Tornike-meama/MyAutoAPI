@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FluentValidation.Results;
+using Microsoft.EntityFrameworkCore;
 using MyAutoAPI1.Controllers.GetBody.Statement;
 using MyAutoAPI1.Models;
 using MyAutoAPI1.Models.Responses;
@@ -74,12 +75,12 @@ namespace MyAutoAPI1.Services
                 return new BadRequest<List<Statement>>(ex.Message);
             }
         }
-        public async Task<IComonResponse<Statement>> AddStatementAsync(AddStatementModel data, string creatorId)
+        public async Task<IComonResponse<Statement>> AddStatementAsync(AddCurrencyModel data, string creatorId)
         {
             try
             {
                 var isUser = _dbContext.Users.Any(o => o.Id == creatorId);
-                if(!isUser) new NotFound<AddStatementModel>("Can't find Creator User");
+                if(!isUser) new NotFound<Statement>("Can't find Creator User");
 
                 var currentCurrency = await _currencyServices.GetCurrencyByIdAsync(data.CurrencyId);
                 if (currentCurrency.IsError) return new NotFound<Statement>("Can't find Currency");
@@ -92,6 +93,11 @@ namespace MyAutoAPI1.Services
                     CurrencyId = data.CurrencyId,
                     Creator = creatorId
                 };
+
+                StatementValidator validaor = new StatementValidator();
+                ValidationResult validationResult = validaor.Validate(statement);
+
+               if (!validationResult.IsValid) return new BadRequest<Statement>(string.Join(", ", validationResult.Errors.Select(o => o.ErrorMessage)));
 
                 _dbContext.Statement.Add(statement);
                 await _dbContext.SaveChangesAsync();

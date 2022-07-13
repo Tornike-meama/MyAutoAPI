@@ -11,7 +11,7 @@ namespace MyAutoAPI1.Services
         public Task<IComonResponse<List<Statement>>> GetAllStatementsAsync(int count, int fromIndex);
         public Task<IComonResponse<Statement>> GetStatementByIdAsync(int id);
         public Task<IComonResponse<List<Statement>>> GetStatementByUserIdAsync(string userId);
-        public Task<IComonResponse<Statement>> AddStatementAsync(AddStatementModel data, string creatorId);
+        public Task<IComonResponse<Statement>> AddStatementAsync(AddCurrencyModel data, string creatorId);
         public Task<IComonResponse<Statement>> UpdateStatementAsync(Statement data);
     }
 }

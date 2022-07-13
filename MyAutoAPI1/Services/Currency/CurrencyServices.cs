@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentValidation.Results;
 
 namespace MyAutoAPI1.Services.Currency
 {
@@ -17,7 +18,7 @@ namespace MyAutoAPI1.Services.Currency
             _dbContext = dbContext;
         }
 
-        public async Task<IComonResponse<List<Models.Currency>>> GetAllCurrencyAsync()
+        public async Task<IComonResponse<List<Models.Currency>>>GetAllCurrencyAsync()
         {
             try
             {
@@ -30,7 +31,7 @@ namespace MyAutoAPI1.Services.Currency
             }
         }
 
-        public async Task<IComonResponse<Models.Currency>> GetCurrencyByIdAsync(int id)
+        public async Task<IComonResponse<Models.Currency>>GetCurrencyByIdAsync(int id)
         {
             try
             {
@@ -47,11 +48,11 @@ namespace MyAutoAPI1.Services.Currency
             }
         }
 
-        public async Task<IComonResponse<Models.Currency>> AddCurrencyAsync(Models.Currency data)
+        public async Task<IComonResponse<Models.Currency>>AddCurrencyAsync(Models.Currency data)
         {
             try
             {
-                if (data == null) return null;
+                if (data == null) return new BadRequest<Models.Currency>("Data is null");
 
                 var currency = new Models.Currency()
                 {
@@ -59,6 +60,12 @@ namespace MyAutoAPI1.Services.Currency
                     ShortName = data.ShortName,
                     Symbol = data.Symbol,
                 };
+
+                CurrencyValidator validaor = new CurrencyValidator();
+                ValidationResult validationResult = validaor.Validate(currency);
+
+                if (!validationResult.IsValid) return new BadRequest<Models.Currency>(string.Join(", ", validationResult.Errors.Select(o => o.ErrorMessage)));
+
                 _dbContext.Currencies.Add(currency);
                 await _dbContext.SaveChangesAsync();
                 return new ComonResponse<Models.Currency>(currency);
