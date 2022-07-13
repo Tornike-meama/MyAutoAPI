@@ -17,7 +17,7 @@ namespace MyAutoAPI1.Services.Currency
             _dbContext = dbContext;
         }
 
-        public async Task<IComonResponse<List<Models.Currency>>> GetAllCurrency()
+        public async Task<IComonResponse<List<Models.Currency>>> GetAllCurrencyAsync()
         {
             try
             {
@@ -30,7 +30,7 @@ namespace MyAutoAPI1.Services.Currency
             }
         }
 
-        public async Task<IComonResponse<Models.Currency>> GetCurrencyById(int id)
+        public async Task<IComonResponse<Models.Currency>> GetCurrencyByIdAsync(int id)
         {
             try
             {
@@ -47,7 +47,7 @@ namespace MyAutoAPI1.Services.Currency
             }
         }
 
-        public async Task<IComonResponse<Models.Currency>> AddCurrency(Models.Currency data)
+        public async Task<IComonResponse<Models.Currency>> AddCurrencyAsync(Models.Currency data)
         {
             try
             {

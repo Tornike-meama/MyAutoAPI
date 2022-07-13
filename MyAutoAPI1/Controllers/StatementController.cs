@@ -29,7 +29,7 @@ namespace MyAutoAPI1.Controllers
         [Route("getAll")]
         public async Task<IActionResult> GetAllStatements([FromQuery] StatementsQuery queries)
         {
-            var res = await _statementService.GetAllStatements(queries.Count, queries.FromIndex);
+            var res = await _statementService.GetAllStatementsAsync(queries.Count, queries.FromIndex);
             return DataResponse(res);
         }
 
@@ -37,7 +37,7 @@ namespace MyAutoAPI1.Controllers
         [Route("getById/{id}")]
         public async Task<IActionResult> GetStatementById([FromRoute] int id)
         {
-            var res = await _statementService.GetStatementById(id);
+            var res = await _statementService.GetStatementByIdAsync(id);
             return DataResponse(res);
         }
 
@@ -45,7 +45,7 @@ namespace MyAutoAPI1.Controllers
         [Route("getByUserId")]
         public async Task<IActionResult> GetStatementByUserId([FromQuery] string userId)
         {
-            var res = await _statementService.GetStatementByUserId(userId);
+            var res = await _statementService.GetStatementByUserIdAsync(userId);
             return DataResponse(res);
         }
 
@@ -55,7 +55,7 @@ namespace MyAutoAPI1.Controllers
         public async Task<IActionResult> AddStatement([FromBody] AddStatementModel statement)
         {
             var userId =  User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var res = await _statementService.AddStatement(statement, userId);
+            var res = await _statementService.AddStatementAsync(statement, userId);
             return DataResponse(res);
         }
 
@@ -64,7 +64,7 @@ namespace MyAutoAPI1.Controllers
         [Route("update")]
         public async Task<IActionResult> UpdateStatement([FromBody] Statement statement)
         {
-            var res = await _statementService.UpdateStatement(statement);
+            var res = await _statementService.UpdateStatementAsync(statement);
             return DataResponse(res);
         }
     }

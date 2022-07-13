@@ -7,8 +7,8 @@ namespace MyAutoAPI1.Services.Currency
 {
     public interface ICurrencyServices
     {
-        public Task<IComonResponse<List<Models.Currency>>> GetAllCurrency();
-        public Task<IComonResponse<Models.Currency>> GetCurrencyById(int id);
-        public Task<IComonResponse<Models.Currency>> AddCurrency(Models.Currency data);
+        public Task<IComonResponse<List<Models.Currency>>> GetAllCurrencyAsync();
+        public Task<IComonResponse<Models.Currency>> GetCurrencyByIdAsync(int id);
+        public Task<IComonResponse<Models.Currency>> AddCurrencyAsync(Models.Currency data);
     }
 }

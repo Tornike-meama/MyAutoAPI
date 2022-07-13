@@ -22,8 +22,7 @@ namespace MyAutoAPI1.Services
             _currencyServices = currencyServices;
         }
 
-
-        public async Task<IComonResponse<List<Statement>>> GetAllStatements(int count, int fromIndex)
+        public async Task<IComonResponse<List<Statement>>> GetAllStatementsAsync(int count, int fromIndex)
         {
             try
             {
@@ -41,8 +40,7 @@ namespace MyAutoAPI1.Services
                 return new BadRequest<List<Statement>>(ex.Message);
             }
         }
-
-        public async Task<IComonResponse<Statement>>GetStatementById(int id)
+        public async Task<IComonResponse<Statement>>GetStatementByIdAsync(int id)
         {
             try
             {
@@ -58,7 +56,7 @@ namespace MyAutoAPI1.Services
                 return new BadRequest<Statement>(ex.Message);
             }
         }
-        public async Task<IComonResponse<List<Statement>>>GetStatementByUserId(string userId)
+        public async Task<IComonResponse<List<Statement>>>GetStatementByUserIdAsync(string userId)
         {
             try
             {
@@ -76,17 +74,15 @@ namespace MyAutoAPI1.Services
                 return new BadRequest<List<Statement>>(ex.Message);
             }
         }
-        public async Task<IComonResponse<Statement>> AddStatement(AddStatementModel data, string creatorId)
+        public async Task<IComonResponse<Statement>> AddStatementAsync(AddStatementModel data, string creatorId)
         {
             try
             {
+                var isUser = _dbContext.Users.Any(o => o.Id == creatorId);
+                if(!isUser) new NotFound<AddStatementModel>("Can't find Creator User");
+
                 var currentCurrency = await _currencyServices.GetCurrencyById(data.CurrencyId);
                 if (data.CurrencyId < 1 || currentCurrency.IsError) new NotFound<AddStatementModel>("Can't find Currency");
-
-                //var tokenArr = token.Split(" ");
-                //var handler = new JwtSecurityTokenHandler();
-                //var jsonToken = handler.ReadToken(tokenArr[1]);
-                //var tokenData = jsonToken as JwtSecurityToken;
 
                 var statement = new Statement()
                 {
@@ -107,8 +103,7 @@ namespace MyAutoAPI1.Services
                 return new BadRequest<Statement>(ex.Message);
             }
         }
-
-        public async Task<IComonResponse<Statement>> UpdateStatement(Statement data)
+        public async Task<IComonResponse<Statement>> UpdateStatementAsync(Statement data)
         {
             try
             {
@@ -135,7 +130,6 @@ namespace MyAutoAPI1.Services
                 return new BadRequest<Statement>(ex.Message);
             }
         }
-
-       
+    
     }
 }

@@ -23,7 +23,7 @@ namespace MyAutoAPI1.Controllers
         [Route("getAll")]
         public async Task<IActionResult> GetAllCurrency()
         {
-            var res = await _currencyServices.GetAllCurrency();
+            var res = await _currencyServices.GetAllCurrencyAsync();
             return DataResponse(res);
         }
 
@@ -32,7 +32,7 @@ namespace MyAutoAPI1.Controllers
 
         public async Task<IActionResult> AddCurrency(Currency currency)
         {
-            var res = await _currencyServices.AddCurrency(currency);
+            var res = await _currencyServices.AddCurrencyAsync(currency);
             return DataResponse(res);
         }
     }
