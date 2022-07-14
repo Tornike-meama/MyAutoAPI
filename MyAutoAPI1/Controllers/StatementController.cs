@@ -67,5 +67,14 @@ namespace MyAutoAPI1.Controllers
             var res = await _statementService.UpdateStatementAsync(statement);
             return DataResponse(res);
         }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost]
+        [Route("delete/{id}")]
+        public async Task<IActionResult> DeleteStatement([FromRoute] int id)
+        {
+            var res = await _statementService.DeleteStatementAsync(id);
+            return DataResponse(res);
+        }
     }
 }

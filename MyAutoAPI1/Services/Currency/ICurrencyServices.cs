@@ -12,5 +12,6 @@ namespace MyAutoAPI1.Services.Currency
         public Task<IComonResponse<Models.Currency>> GetCurrencyByIdAsync(int id);
         public Task<IComonResponse<AddCurrencyModel>> AddCurrencyAsync(AddCurrencyModel data);
         public Task<IComonResponse<UpdateCurrencyModel>> UpdateCurrencyAsync(UpdateCurrencyModel data);
+       // public Task<IComonResponse<UpdateCurrencyModel>> DeleteCurrencyAsync(int id);
     }
 }

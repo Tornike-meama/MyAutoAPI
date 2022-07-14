@@ -13,5 +13,6 @@ namespace MyAutoAPI1.Services
         public Task<IComonResponse<List<Statement>>> GetStatementByUserIdAsync(string userId);
         public Task<IComonResponse<Statement>> AddStatementAsync(AddCurrencyModel data, string creatorId);
         public Task<IComonResponse<Statement>> UpdateStatementAsync(Statement data);
+        public Task<IComonResponse<Statement>> DeleteStatementAsync(int id);
     }
 }

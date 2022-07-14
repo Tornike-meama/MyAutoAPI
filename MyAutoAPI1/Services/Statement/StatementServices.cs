@@ -91,7 +91,8 @@ namespace MyAutoAPI1.Services
                     Description = data.Description,
                     Price = data.Price,
                     CurrencyId = data.CurrencyId,
-                    Creator = creatorId
+                    Creator = creatorId,
+                    CreationDate = DateTime.UtcNow,
                 };
 
                 StatementValidator validaor = new StatementValidator();
@@ -136,6 +137,26 @@ namespace MyAutoAPI1.Services
                 return new BadRequest<Statement>(ex.Message);
             }
         }
-    
+
+        public async Task<IComonResponse<Statement>> DeleteStatementAsync(int id)
+        {
+            try
+            {
+                var deleteStatement = _dbContext.Statement.FirstOrDefault(o => o.Id == id);
+
+                if(deleteStatement == null)
+                {
+                    return new BadRequest<Statement>("Statement not found");
+                }
+
+                _dbContext.Statement.Remove(deleteStatement);
+                await _dbContext.SaveChangesAsync();
+                return new ComonResponse<Statement>(deleteStatement); ;
+            }
+            catch (Exception ex)
+            {
+                return new BadRequest<Statement>(ex.Message);
+            }
+        }
     }
 }

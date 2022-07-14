@@ -84,6 +84,13 @@ namespace MyAutoAPI1.Services.Currency
             {
                 if (data == null) return new BadRequest<UpdateCurrencyModel>("Data is null");
 
+                var currency = _dbContext.Currencies.FirstOrDefault(o => o.Id == data.Id);
+
+                if (currency == null)
+                {
+                    return new NotFound<UpdateCurrencyModel>("Currency not found");
+                }
+
                 UpdateCurrencyvalidator validaor = new UpdateCurrencyvalidator();
                 ValidationResult validationResult = validaor.Validate(data);
 
@@ -92,16 +99,9 @@ namespace MyAutoAPI1.Services.Currency
                     return new BadRequest<UpdateCurrencyModel>(string.Join(", ", validationResult.Errors.Select(o => o.ErrorMessage)));
                 }
 
-                var currency = _dbContext.Currencies.FirstOrDefault(o => o.Id == data.Id);
-
-                if(currency== null)
-                {
-                    return new NotFound<UpdateCurrencyModel>("Currency not found");
-                }
-
                 currency.Name = data.Name;
                 currency.ShortName = data.ShortName;
-                currency.ShortName = data.Symbol;
+                currency.Symbol = data.Symbol;
 
                 await _dbContext.SaveChangesAsync();
                 return new ComonResponse<UpdateCurrencyModel>(data);
@@ -111,5 +111,24 @@ namespace MyAutoAPI1.Services.Currency
                 return new BadRequest<UpdateCurrencyModel>(ex.Message);
             }
         }
+
+        //public Task<IComonResponse<UpdateCurrencyModel>> DeleteCurrencyAsync(int id)
+        //{
+        //    try
+        //    {
+        //        var currency = _dbContext.Currencies.FirstOrDefault(o => o.Id == Id);
+
+        //        if (currency == null)
+        //        {
+        //            return new NotFound<UpdateCurrencyModel>("Currency not found");
+        //        }
+
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new BadRequest<UpdateCurrencyModel>(ex.Message);
+        //    }
+        //}
     }
 }
