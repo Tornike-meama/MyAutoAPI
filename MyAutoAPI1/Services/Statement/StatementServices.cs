@@ -23,7 +23,7 @@ namespace MyAutoAPI1.Services
             _currencyServices = currencyServices;
         }
 
-        public async Task<IComonResponse<List<Statement>>> GetAllStatementsAsync(int count, int fromIndex)
+        public async Task<IComonResponse<List<Statement>>>GetAllStatementsAsync(int count, int fromIndex)
         {
             try
             {
@@ -75,7 +75,7 @@ namespace MyAutoAPI1.Services
                 return new BadRequest<List<Statement>>(ex.Message);
             }
         }
-        public async Task<IComonResponse<Statement>> AddStatementAsync(AddCurrencyModel data, string creatorId)
+        public async Task<IComonResponse<Statement>>AddStatementAsync(AddCurrencyModel data, string creatorId)
         {
             try
             {
