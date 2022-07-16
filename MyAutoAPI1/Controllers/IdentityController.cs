@@ -45,5 +45,13 @@ namespace MyAutoAPI1.Controllers
             return Ok(res);
         }
 
+        [HttpGet]
+        [Route("getAll")]
+        public async Task<IActionResult> GetAllUser()
+        {
+           var res = await _identityServices.GetAllUsersAsync();
+           return DataResponse(res);
+        }
+
     }
 }

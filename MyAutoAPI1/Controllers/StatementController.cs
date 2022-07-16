@@ -62,9 +62,10 @@ namespace MyAutoAPI1.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         [Route("update")]
-        public async Task<IActionResult> UpdateStatement([FromBody] Statement statement)
+        public async Task<IActionResult> UpdateStatement([FromBody] UpdateStatement statement)
         {
-            var res = await _statementService.UpdateStatementAsync(statement);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var res = await _statementService.UpdateStatementAsync(statement, userId);
             return DataResponse(res);
         }
 
@@ -73,7 +74,8 @@ namespace MyAutoAPI1.Controllers
         [Route("delete/{id}")]
         public async Task<IActionResult> DeleteStatement([FromRoute] int id)
         {
-            var res = await _statementService.DeleteStatementAsync(id);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var res = await _statementService.DeleteStatementAsync(id, userId);
             return DataResponse(res);
         }
     }

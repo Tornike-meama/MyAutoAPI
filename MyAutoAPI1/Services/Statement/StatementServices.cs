@@ -110,7 +110,7 @@ namespace MyAutoAPI1.Services
                 return new BadRequest<Statement>(ex.Message);
             }
         }
-        public async Task<IComonResponse<Statement>> UpdateStatementAsync(Statement data)
+        public async Task<IComonResponse<Statement>>UpdateStatementAsync(UpdateStatement data, string creatorId)
         {
             try
             {
@@ -119,26 +119,42 @@ namespace MyAutoAPI1.Services
                 {
                     return new NotFound<Statement>("Currency not found");
                 }
+
                 var statement = _dbContext.Statement.FirstOrDefault(o => o.Id == data.Id);
                 if(statement == null)
                 {
                     return new NotFound<Statement>("Statement not found invalid ID");
                 }
+
+                if(statement.Creator != creatorId)
+                {
+                    return new NotFound<Statement>("You can't edit other statement");
+                }
+
                 statement.Title = data.Title;
                 statement.Description = data.Description;
                 statement.Price = data.Price;
                 statement.CurrencyId = data.CurrencyId;
 
+                var dataResponse = new Statement()
+                {
+                    Id = statement.Id,
+                    Creator = creatorId,
+                    Title = data.Title,
+                    Description = data.Description,
+                    Price = data.Price,
+                    CurrencyId = data.CurrencyId,
+                };
+
                 await _dbContext.SaveChangesAsync();
-                return new ComonResponse<Statement>(data); ;
+                return new ComonResponse<Statement>(dataResponse); ;
             }
             catch (Exception ex)
             {
                 return new BadRequest<Statement>(ex.Message);
             }
         }
-
-        public async Task<IComonResponse<Statement>> DeleteStatementAsync(int id)
+        public async Task<IComonResponse<Statement>>DeleteStatementAsync(int id, string userId)
         {
             try
             {
@@ -147,6 +163,11 @@ namespace MyAutoAPI1.Services
                 if(deleteStatement == null)
                 {
                     return new BadRequest<Statement>("Statement not found");
+                }
+
+                if(deleteStatement.Creator != userId)
+                {
+                    return new BadRequest<Statement>("User only can delete own statement");
                 }
 
                 _dbContext.Statement.Remove(deleteStatement);

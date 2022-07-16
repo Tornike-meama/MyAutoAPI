@@ -1,11 +1,15 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MyAutoAPI1.Controllers.GetQueries;
+using MyAutoAPI1.DTO.Identity.GetAlluser;
 using MyAutoAPI1.Models;
 using MyAutoAPI1.Models.Responses;
 using MyAutoAPI1.Options;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,11 +20,13 @@ namespace MyAutoAPI1.Services.Identity
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly JwtSettings _jwtSettings;
+        private readonly MyDbContext _dbContext;
 
-        public IdentityServices(UserManager<IdentityUser> userManager, JwtSettings jwtSettings)
+        public IdentityServices(UserManager<IdentityUser> userManager, JwtSettings jwtSettings, MyDbContext dbContext)
         {
             _userManager = userManager;
             _jwtSettings = jwtSettings;
+            _dbContext = dbContext;
         }
 
         public async Task<IComonResponse<string>> LoginAsync(string email, string password)
@@ -81,7 +87,27 @@ namespace MyAutoAPI1.Services.Identity
             }
         }
 
-      
+        public async Task<IComonResponse<List<GetAllsuer>>>GetAllUsersAsync()
+        {
+            try
+            {
+                var res = await _dbContext.Users.ToListAsync();
+                List<GetAllsuer> usersList = res.Select(o => new GetAllsuer(
+                    o.Id,
+                    o.UserName,
+                    o.Email,
+                    o.EmailConfirmed,
+                    o.PhoneNumber,
+                    o.PhoneNumberConfirmed
+                )).ToList();
+                return new ComonResponse<List<GetAllsuer>>(usersList);
+            }
+            catch (Exception ex)
+            {
+                return new BadRequest<List<GetAllsuer>>(ex.Message);
+            }
+        }
+
         private IComonResponse<string> GenerateAuthResultForUser(IdentityUser newUser)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
