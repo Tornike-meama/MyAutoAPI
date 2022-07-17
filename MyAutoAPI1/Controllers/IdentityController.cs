@@ -53,5 +53,13 @@ namespace MyAutoAPI1.Controllers
            return DataResponse(res);
         }
 
+        [HttpGet]
+        [Route("getUserById/{id}")]
+        public async Task<IActionResult> GetUserById([FromRoute] string id)
+        {
+            var res = await _identityServices.GetUserByIdAsync(id);
+            return DataResponse(res);
+        }
+
     }
 }

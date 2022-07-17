@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using MyAutoAPI1.Services.Role;
 
 namespace MyAutoAPI1
 {
@@ -57,10 +58,10 @@ namespace MyAutoAPI1
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters()
                 {
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret)),
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Secret)),
                     ValidateIssuer = false,
-                    ValidateAudience = false,
+                    ValidateAudience = true,
                     RequireExpirationTime = false,
                     ValidateLifetime = true
                 };
@@ -101,8 +102,11 @@ namespace MyAutoAPI1
 
             services.AddTransient<IStatementServices, StatementServices>();
             services.AddTransient<ICurrencyServices, CurrencyServices>();
+            services.AddTransient<IRoleServices, RoleServices>();
             services.AddDbContext<MyDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<MyDbContext>();
+            services.AddDefaultIdentity<IdentityUser>()
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<MyDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -120,6 +124,7 @@ namespace MyAutoAPI1
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

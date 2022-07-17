@@ -112,7 +112,7 @@ namespace MyAutoAPI1.Services.Currency
             }
         }
 
-        //public Task<IComonResponse<UpdateCurrencyModel>> DeleteCurrencyAsync(int id)
+        //public async Task<IComonResponse<Models.Currency>> DeleteCurrencyAsync(int id)
         //{
         //    try
         //    {
@@ -120,14 +120,15 @@ namespace MyAutoAPI1.Services.Currency
 
         //        if (currency == null)
         //        {
-        //            return new NotFound<UpdateCurrencyModel>("Currency not found");
+        //            return new NotFound<Models.Currency>("Currency not found");
         //        }
 
+                
 
         //    }
         //    catch (Exception ex)
         //    {
-        //        return new BadRequest<UpdateCurrencyModel>(ex.Message);
+        //        return new BadRequest<Models.Currency>(ex.Message);
         //    }
         //}
     }

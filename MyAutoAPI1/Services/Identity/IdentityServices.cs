@@ -19,12 +19,19 @@ namespace MyAutoAPI1.Services.Identity
     public class IdentityServices : IIdentityServices
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly JwtSettings _jwtSettings;
         private readonly MyDbContext _dbContext;
 
-        public IdentityServices(UserManager<IdentityUser> userManager, JwtSettings jwtSettings, MyDbContext dbContext)
+        public IdentityServices(
+                UserManager<IdentityUser> userManager, 
+                RoleManager<IdentityRole> roleManager,
+                JwtSettings jwtSettings, 
+                MyDbContext dbContext
+               )
         {
             _userManager = userManager;
+            _roleManager = roleManager;
             _jwtSettings = jwtSettings;
             _dbContext = dbContext;
         }
@@ -47,7 +54,7 @@ namespace MyAutoAPI1.Services.Identity
                     return new BadRequest<string>("user or password is ivalid!");
                 }
 
-                return GenerateAuthResultForUser(authUser);
+                return await GenerateAuthResultForUser(authUser);
             }
             catch (Exception ex)
             {
@@ -79,7 +86,7 @@ namespace MyAutoAPI1.Services.Identity
                     return new BadRequest<string>("user can't register!");
                 }
 
-                return GenerateAuthResultForUser(newUser);
+                return await GenerateAuthResultForUser(newUser);
             }
             catch (Exception ex)
             {
@@ -87,12 +94,12 @@ namespace MyAutoAPI1.Services.Identity
             }
         }
 
-        public async Task<IComonResponse<List<GetAllsuer>>>GetAllUsersAsync()
+        public async Task<IComonResponse<List<GetAlluser>>>GetAllUsersAsync()
         {
             try
             {
                 var res = await _dbContext.Users.ToListAsync();
-                List<GetAllsuer> usersList = res.Select(o => new GetAllsuer(
+                List<GetAlluser> usersList = res.Select(o => new GetAlluser(
                     o.Id,
                     o.UserName,
                     o.Email,
@@ -100,27 +107,73 @@ namespace MyAutoAPI1.Services.Identity
                     o.PhoneNumber,
                     o.PhoneNumberConfirmed
                 )).ToList();
-                return new ComonResponse<List<GetAllsuer>>(usersList);
+                return new ComonResponse<List<GetAlluser>>(usersList);
             }
             catch (Exception ex)
             {
-                return new BadRequest<List<GetAllsuer>>(ex.Message);
+                return new BadRequest<List<GetAlluser>>(ex.Message);
+            }
+        }
+        
+        public async Task<IComonResponse<GetuserById>> GetUserByIdAsync(string id)
+        {
+            try
+            {
+                var user = await _dbContext.Users.FirstOrDefaultAsync(o => o.Id == id);
+
+                if(user == null)
+                {
+                    return new BadRequest<GetuserById>("Can't find user");
+                }
+
+                List<string> userRoleIds = await _dbContext.UserRoles.Where(o => o.UserId == id).Select(o => o.RoleId).ToListAsync();
+
+                var res = new GetuserById(
+                    user.Id,
+                    user.UserName,
+                    user.Email,
+                    user.EmailConfirmed,
+                    user.PhoneNumber,
+                    user.PhoneNumberConfirmed,
+                    userRoleIds
+                    );
+
+                return new ComonResponse<GetuserById>(res);
+            }
+            catch (Exception ex)
+            {
+                return new BadRequest<GetuserById>(ex.Message);
             }
         }
 
-        private IComonResponse<string> GenerateAuthResultForUser(IdentityUser newUser)
+        private async Task<IComonResponse<string>> GenerateAuthResultForUser(IdentityUser user)
         {
+            var claims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
+                new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            };
+
+            var logedUserRoles = from userRole in _dbContext.UserRoles
+                                 join role in _dbContext.Roles
+                                 on userRole.UserId equals user.Id
+                                 select role;
+            var userClaims = await _userManager.GetRolesAsync(user);
+
+            if(userClaims.Any())
+            {
+                foreach (var role in userClaims)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, role));
+                }
+            }
+
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[]
-                {
-                        new Claim(ClaimTypes.NameIdentifier, newUser.Id),
-                        new Claim(JwtRegisteredClaimNames.Sub, newUser.Email),
-                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                        new Claim(JwtRegisteredClaimNames.Sub, newUser.Email),
-                    }),
+                Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
             };

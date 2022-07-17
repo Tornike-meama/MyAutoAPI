@@ -12,6 +12,7 @@ namespace MyAutoAPI1.Services.Identity
     {
         public Task<IComonResponse<string>> RegisterAsync(string email, string password, string name);
         public Task<IComonResponse<string>> LoginAsync(string email, string password);
-        public Task<IComonResponse<List<GetAllsuer>>> GetAllUsersAsync();
+        public Task<IComonResponse<List<GetAlluser>>> GetAllUsersAsync();
+        public Task<IComonResponse<GetuserById>> GetUserByIdAsync(string id);
     }
 }
