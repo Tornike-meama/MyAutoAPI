@@ -30,6 +30,7 @@ namespace MyAutoAPI1.Controllers
             return DataResponse(res);
         }
 
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("getAll")]

@@ -58,12 +58,12 @@ namespace MyAutoAPI1
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters()
                 {
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret)),
                     ValidateIssuerSigningKey = true,
                     ValidateIssuer = false,
-                    ValidateAudience = true,
+                    ValidateAudience = false,
                     RequireExpirationTime = false,
-                    ValidateLifetime = true
+                    ValidateLifetime = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Secret)),
                 };
             });
 
@@ -122,9 +122,8 @@ namespace MyAutoAPI1
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
