@@ -32,8 +32,13 @@ namespace MyAutoAPI1.Services.Role
                     return new BadRequest<string>("No provide role name");
                 }
 
-                IdentityResult roleResult = await _roleManager.CreateAsync(new IdentityRole(roleName));
+                var isRole = _dbContext.Roles.FirstOrDefault(o => o.Name.ToLower() == roleName.ToLower());
+                if(isRole != null)
+                {
+                    return new BadRequest<string>("role alrady exsist!");
+                }
 
+                IdentityResult roleResult = await _roleManager.CreateAsync(new IdentityRole(roleName));
                 if(!roleResult.Succeeded)
                 {
                     return new BadRequest<string>("can't create role somthing wrong");
@@ -52,6 +57,12 @@ namespace MyAutoAPI1.Services.Role
         {
             try
             {
+                var haveUserRole = _dbContext.UserRoles.FirstOrDefault(o => o.UserId == data.UserId);
+                if(haveUserRole != null)
+                {
+                    return new BadRequest<string>("user alrady have this role!");
+                }
+
                 var role = _dbContext.Roles.FirstOrDefault(o => o.Id == data.RoleId);
                 var user = _dbContext.Users.FirstOrDefault(o => o.Id == data.UserId);
 
@@ -71,7 +82,7 @@ namespace MyAutoAPI1.Services.Role
             }
         }
 
-        public async Task<IComonResponse<List<IdentityRole>>> GetAllRoleAsync()
+        public async Task<IComonResponse<List<IdentityRole>>>GetAllRoleAsync()
         {
             try
             {

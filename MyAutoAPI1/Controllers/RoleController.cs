@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyAutoAPI1.Controllers.GetBody.Role;
 using MyAutoAPI1.Services.Role;
-using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -21,7 +18,7 @@ namespace MyAutoAPI1.Controllers
             _roleServices = roleServices;
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [Route("create")]
         public async Task<IActionResult> CreateRole([FromBody] AddRoleModel addRole)
@@ -30,7 +27,6 @@ namespace MyAutoAPI1.Controllers
             return DataResponse(res);
         }
 
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("getAll")]

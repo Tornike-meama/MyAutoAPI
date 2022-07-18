@@ -19,19 +19,16 @@ namespace MyAutoAPI1.Services.Identity
     public class IdentityServices : IIdentityServices
     {
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly JwtSettings _jwtSettings;
         private readonly MyDbContext _dbContext;
 
         public IdentityServices(
                 UserManager<IdentityUser> userManager, 
-                RoleManager<IdentityRole> roleManager,
                 JwtSettings jwtSettings, 
                 MyDbContext dbContext
                )
         {
             _userManager = userManager;
-            _roleManager = roleManager;
             _jwtSettings = jwtSettings;
             _dbContext = dbContext;
         }
@@ -115,7 +112,7 @@ namespace MyAutoAPI1.Services.Identity
             }
         }
         
-        public async Task<IComonResponse<GetuserById>> GetUserByIdAsync(string id)
+        public async Task<IComonResponse<GetuserById>>GetUserByIdAsync(string id)
         {
             try
             {
@@ -146,7 +143,7 @@ namespace MyAutoAPI1.Services.Identity
             }
         }
 
-        private async Task<IComonResponse<string>> GenerateAuthResultForUser(IdentityUser user)
+        private async Task<IComonResponse<string>>GenerateAuthResultForUser(IdentityUser user)
         {
             var claims = new List<Claim>()
             {
