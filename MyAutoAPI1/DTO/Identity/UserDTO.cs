@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace MyAutoAPI1.DTO.Identity.GetAlluser
+namespace MyAutoAPI1.DTO.Identity
 {
-    public interface IGetUserById
+    public class UserDTO
     {
         public string Id { get; set; }
         public string UserName { get; set; }
@@ -11,5 +11,6 @@ namespace MyAutoAPI1.DTO.Identity.GetAlluser
         public string PhoneNumber { get; set; }
         public bool PhoneNumberConfirmed { get; set; }
         public List<string> UserRoles { get; set; }
+
     }
 }

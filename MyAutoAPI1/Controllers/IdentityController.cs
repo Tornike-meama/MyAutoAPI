@@ -20,46 +20,19 @@ namespace MyAutoAPI1.Controllers
 
         [HttpPost]
         [Route("register")]
-        public async Task<IActionResult> Register([FromBody] RegistrationRequest request)
-        {
-            var res = await _identityServices.RegisterAsync(request.Email, request.Password, request.Name);
-
-            if(res.IsError)
-            {
-                return BadRequest(res);
-            }
-            return Ok(res);
-        }
-
+        public async Task<IActionResult> Register([FromBody] RegistrationRequest request) => DataResponse(await _identityServices.RegisterAsync(request.Email, request.Password, request.Name));
 
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequest request)
-        {
-            var res = await _identityServices.LoginAsync(request.Email, request.Password);
-
-            if (res.IsError)
-            {
-                return BadRequest(res);
-            }
-            return Ok(res);
-        }
+        public async Task<IActionResult> Login([FromBody] LoginRequest request) => DataResponse(await _identityServices.LoginAsync(request.Email, request.Password));
 
         [HttpGet]
         [Route("getAll")]
-        public async Task<IActionResult> GetAllUser()
-        {
-           var res = await _identityServices.GetAllUsersAsync();
-           return DataResponse(res);
-        }
+        public async Task<IActionResult> GetAllUser() => DataResponse(await _identityServices.GetAllUsersAsync());
 
         [HttpGet]
         [Route("getUserById/{id}")]
-        public async Task<IActionResult> GetUserById([FromRoute] string id)
-        {
-            var res = await _identityServices.GetUserByIdAsync(id);
-            return DataResponse(res);
-        }
+        public async Task<IActionResult> GetUserById([FromRoute] string id) => DataResponse(await _identityServices.GetUserByIdAsync(id));
 
     }
 }

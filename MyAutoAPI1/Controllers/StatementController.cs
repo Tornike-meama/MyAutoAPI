@@ -27,19 +27,11 @@ namespace MyAutoAPI1.Controllers
 
         [HttpGet]
         [Route("getAll")]
-        public async Task<IActionResult> GetAllStatements([FromQuery] StatementsQuery queries)
-        {
-            var res = await _statementService.GetAllStatementsAsync(queries.Count, queries.FromIndex);
-            return DataResponse(res);
-        }
+        public async Task<IActionResult> GetAllStatements([FromQuery] StatementsQuery queries) =>  DataResponse(await _statementService.GetAllStatementsAsync(queries.Count, queries.FromIndex));
 
         [HttpGet]
         [Route("getById/{id}")]
-        public async Task<IActionResult> GetStatementById([FromRoute] int id)
-        {
-            var res = await _statementService.GetStatementByIdAsync(id);
-            return DataResponse(res);
-        }
+        public async Task<IActionResult> GetStatementById([FromRoute] int id) => DataResponse(await _statementService.GetStatementByIdAsync(id));
 
         [HttpGet]
         [Route("getByUserId")]

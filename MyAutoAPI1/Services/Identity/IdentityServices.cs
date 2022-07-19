@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using MyAutoAPI1.Controllers.GetQueries;
-using MyAutoAPI1.DTO.Identity.GetAlluser;
+using MyAutoAPI1.DTO.Identity;
 using MyAutoAPI1.Models;
 using MyAutoAPI1.Models.Responses;
 using MyAutoAPI1.Options;
@@ -91,28 +90,33 @@ namespace MyAutoAPI1.Services.Identity
             }
         }
 
-        public async Task<IComonResponse<List<GetAlluser>>>GetAllUsersAsync()
+        public async Task<IComonResponse<List<UserDTO>>>GetAllUsersAsync()
         {
             try
             {
                 var res = await _dbContext.Users.ToListAsync();
-                List<GetAlluser> usersList = res.Select(o => new GetAlluser(
-                    o.Id,
-                    o.UserName,
-                    o.Email,
-                    o.EmailConfirmed,
-                    o.PhoneNumber,
-                    o.PhoneNumberConfirmed
-                )).ToList();
-                return new ComonResponse<List<GetAlluser>>(usersList);
+
+                var usersList = res.Select(o => new UserDTO
+                {
+                        Id = o.Id,
+                        UserName = o.UserName,
+                        Email = o.Email,
+                        EmailConfirmed = o.EmailConfirmed,
+                        PhoneNumber = o.PhoneNumber,
+                        PhoneNumberConfirmed = o.PhoneNumberConfirmed,
+                        UserRoles = _dbContext.UserRoles.Where(i => i.UserId == o.Id).Select(i => i.RoleId).ToList()
+                        
+                }).ToList();
+
+                return new ComonResponse<List<UserDTO>>(usersList);
             }
             catch (Exception ex)
             {
-                return new BadRequest<List<GetAlluser>>(ex.Message);
+                return new BadRequest<List<UserDTO>>(ex.Message);
             }
         }
         
-        public async Task<IComonResponse<GetuserById>>GetUserByIdAsync(string id)
+        public async Task<IComonResponse<UserDTO>>GetUserByIdAsync(string id)
         {
             try
             {
@@ -120,26 +124,27 @@ namespace MyAutoAPI1.Services.Identity
 
                 if(user == null)
                 {
-                    return new BadRequest<GetuserById>("Can't find user");
+                    return new BadRequest<UserDTO>("Can't find user");
                 }
 
                 List<string> userRoleIds = await _dbContext.UserRoles.Where(o => o.UserId == id).Select(o => o.RoleId).ToListAsync();
 
-                var res = new GetuserById(
-                    user.Id,
-                    user.UserName,
-                    user.Email,
-                    user.EmailConfirmed,
-                    user.PhoneNumber,
-                    user.PhoneNumberConfirmed,
-                    userRoleIds
-                    );
+                var res = new UserDTO
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    EmailConfirmed = user.EmailConfirmed,
+                    PhoneNumber = user.PhoneNumber,
+                    PhoneNumberConfirmed = user.PhoneNumberConfirmed,
+                    UserRoles = userRoleIds
+                };
 
-                return new ComonResponse<GetuserById>(res);
+                return new ComonResponse<UserDTO>(res);
             }
             catch (Exception ex)
             {
-                return new BadRequest<GetuserById>(ex.Message);
+                return new BadRequest<UserDTO>(ex.Message);
             }
         }
 

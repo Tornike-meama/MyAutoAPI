@@ -5,9 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FluentValidation.Results;
 using MyAutoAPI1.Controllers.GetBody.Currency;
-using MyAutoAPI1.Validators;
 
 namespace MyAutoAPI1.Services.Currency
 {
@@ -63,11 +61,6 @@ namespace MyAutoAPI1.Services.Currency
                     Symbol = data.Symbol,
                 };
 
-                AddCurrencyValidator validaor = new AddCurrencyValidator();
-                ValidationResult validationResult = validaor.Validate(data);
-
-                if (!validationResult.IsValid) return new BadRequest<AddCurrencyModel>(string.Join(", ", validationResult.Errors.Select(o => o.ErrorMessage)));
-
                 _dbContext.Currencies.Add(currency);
                 await _dbContext.SaveChangesAsync();
                 return new ComonResponse<AddCurrencyModel>(data);
@@ -89,14 +82,6 @@ namespace MyAutoAPI1.Services.Currency
                 if (currency == null)
                 {
                     return new NotFound<UpdateCurrencyModel>("Currency not found");
-                }
-
-                UpdateCurrencyvalidator validaor = new UpdateCurrencyvalidator();
-                ValidationResult validationResult = validaor.Validate(data);
-
-                if (!validationResult.IsValid)
-                {
-                    return new BadRequest<UpdateCurrencyModel>(string.Join(", ", validationResult.Errors.Select(o => o.ErrorMessage)));
                 }
 
                 currency.Name = data.Name;

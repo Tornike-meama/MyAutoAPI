@@ -30,11 +30,7 @@ namespace MyAutoAPI1.Controllers
         [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("getAll")]
-        public async Task<IActionResult> GetAllRole([FromBody] AddRoleModel addRole)
-        {
-            var res = await _roleServices.GetAllRoleAsync();
-            return DataResponse(res);
-        }
+        public async Task<IActionResult> GetAllRole([FromBody] AddRoleModel addRole) => DataResponse(await _roleServices.GetAllRoleAsync());
 
         [Authorize(Roles = "Editor")]
         [HttpPost]
