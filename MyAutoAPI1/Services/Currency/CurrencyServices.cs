@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MyAutoAPI1.Controllers.GetBody.Currency;
+using Serilog;
 
 namespace MyAutoAPI1.Services.Currency
 {
@@ -27,6 +28,7 @@ namespace MyAutoAPI1.Services.Currency
             }
             catch (Exception ex)
             {
+                Log.Fatal(ex.Message);
                 return new BadRequest<List<Models.Currency>>(ex.Message);
             }
         }
