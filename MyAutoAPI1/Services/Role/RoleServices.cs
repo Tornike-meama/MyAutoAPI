@@ -82,6 +82,15 @@ namespace MyAutoAPI1.Services.Role
             }
         }
 
+        public async Task CheckRolesAsyncInBG()
+        {
+            if (!_dbContext.Roles.Any())
+            {
+                await _roleManager.CreateAsync(new IdentityRole("Admin"));
+                await _roleManager.CreateAsync(new IdentityRole("Editor"));
+            }
+        }
+
         public async Task<IComonResponse<List<IdentityRole>>>GetAllRoleAsync()
         {
             try

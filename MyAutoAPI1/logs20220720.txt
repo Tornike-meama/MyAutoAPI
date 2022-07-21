@@ -138,3 +138,223 @@ Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Failed to generate 
    at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
    at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
 2022-07-20 21:40:29.567 +04:00 [INF] Request finished HTTP/2 GET https://localhost:44359/swagger/v1/swagger.json - - - 500 - text/plain 236.1720ms
+2022-07-20 22:11:00.183 +04:00 [INF] User profile is available. Using 'C:\Users\erekl\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-07-20 22:11:00.696 +04:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-07-20 22:11:00.700 +04:00 [INF] Hosting environment: Development
+2022-07-20 22:11:00.703 +04:00 [INF] Content root path: C:\Users\erekl\Desktop\Code\E-commerce\MyAutoAPI\MyAutoAPI1
+2022-07-20 22:11:00.768 +04:00 [INF] Request starting HTTP/2 GET https://localhost:44359/swagger/index.html - -
+2022-07-20 22:11:01.130 +04:00 [INF] Request finished HTTP/2 GET https://localhost:44359/swagger/index.html - - - 200 - text/html;charset=utf-8 364.4979ms
+2022-07-20 22:11:01.151 +04:00 [INF] Request starting HTTP/2 GET https://localhost:44359/_framework/aspnetcore-browser-refresh.js - -
+2022-07-20 22:11:01.176 +04:00 [INF] Request finished HTTP/2 GET https://localhost:44359/_framework/aspnetcore-browser-refresh.js - - - 200 11990 application/javascript;+charset=utf-8 24.4416ms
+2022-07-20 22:11:01.208 +04:00 [INF] Request starting HTTP/2 GET https://localhost:44359/_vs/browserLink - -
+2022-07-20 22:11:01.277 +04:00 [INF] Request finished HTTP/2 GET https://localhost:44359/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 68.4396ms
+2022-07-20 22:11:01.355 +04:00 [INF] Request starting HTTP/2 GET https://localhost:44359/swagger/v1/swagger.json - -
+2022-07-20 22:11:01.456 +04:00 [ERR] An unhandled exception has occurred while executing the request.
+Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Failed to generate Operation for action - MyAutoAPI1.Controllers.StatementController.AddStatement (MyAutoAPI1). See inner exception
+ ---> Swashbuckle.AspNetCore.SwaggerGen.SchemaGeneratorException: Failed to generate Schema for type - MyAutoAPI1.Controllers.GetBody.Statement.AddCurrencyModel. See inner exception
+ ---> System.InvalidOperationException: Can't use schemaId "$AddCurrencyModel" for type "$MyAutoAPI1.Controllers.GetBody.Statement.AddCurrencyModel". The same schemaId is already used for type "$MyAutoAPI1.Controllers.GetBody.Currency.AddCurrencyModel"
+   at Swashbuckle.AspNetCore.SwaggerGen.SchemaRepository.RegisterType(Type type, String schemaId)
+   at Swashbuckle.AspNetCore.SwaggerGen.SchemaGenerator.GenerateReferencedSchema(Type type, SchemaRepository schemaRepository, Func`1 definitionFactory)
+   at Swashbuckle.AspNetCore.SwaggerGen.SchemaGenerator.GenerateSchemaForType(Type type, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SchemaGenerator.GenerateSchema(Type type, SchemaRepository schemaRepository, MemberInfo memberInfo, ParameterInfo parameterInfo)
+   --- End of inner exception stack trace ---
+   at Swashbuckle.AspNetCore.SwaggerGen.SchemaGenerator.GenerateSchema(Type type, SchemaRepository schemaRepository, MemberInfo memberInfo, ParameterInfo parameterInfo)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateRequestBodyFromBodyParameter(ApiDescription apiDescription, SchemaRepository schemaRepository, ApiParameterDescription bodyParameter)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateRequestBody(ApiDescription apiDescription, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperation(ApiDescription apiDescription, SchemaRepository schemaRepository)
+   --- End of inner exception stack trace ---
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperation(ApiDescription apiDescription, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperations(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePaths(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwagger(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2022-07-20 22:11:01.551 +04:00 [INF] Request finished HTTP/2 GET https://localhost:44359/swagger/v1/swagger.json - - - 500 - text/plain 196.2098ms
+2022-07-20 22:20:33.182 +04:00 [INF] User profile is available. Using 'C:\Users\erekl\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-07-20 22:20:33.555 +04:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-07-20 22:20:33.568 +04:00 [INF] Hosting environment: Development
+2022-07-20 22:20:33.571 +04:00 [INF] Content root path: C:\Users\erekl\Desktop\Code\E-commerce\MyAutoAPI\MyAutoAPI1
+2022-07-20 22:20:33.599 +04:00 [INF] Request starting HTTP/2 GET https://localhost:44359/swagger/index.html - -
+2022-07-20 22:20:33.976 +04:00 [INF] Request finished HTTP/2 GET https://localhost:44359/swagger/index.html - - - 200 - text/html;charset=utf-8 376.9330ms
+2022-07-20 22:20:34.039 +04:00 [INF] Request starting HTTP/2 GET https://localhost:44359/_framework/aspnetcore-browser-refresh.js - -
+2022-07-20 22:20:34.062 +04:00 [INF] Request finished HTTP/2 GET https://localhost:44359/_framework/aspnetcore-browser-refresh.js - - - 200 11990 application/javascript;+charset=utf-8 21.5330ms
+2022-07-20 22:20:34.114 +04:00 [INF] Request starting HTTP/2 GET https://localhost:44359/_vs/browserLink - -
+2022-07-20 22:20:34.188 +04:00 [INF] Request finished HTTP/2 GET https://localhost:44359/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 73.8003ms
+2022-07-20 22:20:34.346 +04:00 [INF] Request starting HTTP/2 GET https://localhost:44359/swagger/v1/swagger.json - -
+2022-07-20 22:20:34.426 +04:00 [ERR] An unhandled exception has occurred while executing the request.
+Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Failed to generate Operation for action - MyAutoAPI1.Controllers.StatementController.AddStatement (MyAutoAPI1). See inner exception
+ ---> Swashbuckle.AspNetCore.SwaggerGen.SchemaGeneratorException: Failed to generate Schema for type - MyAutoAPI1.Controllers.GetBody.Statement.AddCurrencyModel. See inner exception
+ ---> System.InvalidOperationException: Can't use schemaId "$AddCurrencyModel" for type "$MyAutoAPI1.Controllers.GetBody.Statement.AddCurrencyModel". The same schemaId is already used for type "$MyAutoAPI1.Controllers.GetBody.Currency.AddCurrencyModel"
+   at Swashbuckle.AspNetCore.SwaggerGen.SchemaRepository.RegisterType(Type type, String schemaId)
+   at Swashbuckle.AspNetCore.SwaggerGen.SchemaGenerator.GenerateReferencedSchema(Type type, SchemaRepository schemaRepository, Func`1 definitionFactory)
+   at Swashbuckle.AspNetCore.SwaggerGen.SchemaGenerator.GenerateSchemaForType(Type type, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SchemaGenerator.GenerateSchema(Type type, SchemaRepository schemaRepository, MemberInfo memberInfo, ParameterInfo parameterInfo)
+   --- End of inner exception stack trace ---
+   at Swashbuckle.AspNetCore.SwaggerGen.SchemaGenerator.GenerateSchema(Type type, SchemaRepository schemaRepository, MemberInfo memberInfo, ParameterInfo parameterInfo)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateRequestBodyFromBodyParameter(ApiDescription apiDescription, SchemaRepository schemaRepository, ApiParameterDescription bodyParameter)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateRequestBody(ApiDescription apiDescription, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperation(ApiDescription apiDescription, SchemaRepository schemaRepository)
+   --- End of inner exception stack trace ---
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperation(ApiDescription apiDescription, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperations(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePaths(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwagger(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2022-07-20 22:20:34.506 +04:00 [INF] Request finished HTTP/2 GET https://localhost:44359/swagger/v1/swagger.json - - - 500 - text/plain 159.9723ms
+2022-07-20 22:23:16.593 +04:00 [FTL] Host terminated unexpectedly
+System.ArgumentException: Cannot instantiate implementation type 'Microsoft.Extensions.Hosting.BackgroundService' for service type 'Microsoft.Extensions.Hosting.IHostedService'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.Populate()
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory..ctor(IEnumerable`1 descriptors)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine..ctor(IEnumerable`1 serviceDescriptors)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CompiledServiceProviderEngine..ctor(IEnumerable`1 serviceDescriptors)
+   at Microsoft.Extensions.DependencyInjection.ServiceCollectionContainerBuilderExtensions.BuildServiceProvider(IServiceCollection services, ServiceProviderOptions options)
+   at Microsoft.Extensions.DependencyInjection.DefaultServiceProviderFactory.CreateServiceProvider(IServiceCollection containerBuilder)
+   at Microsoft.Extensions.Hosting.Internal.ServiceFactoryAdapter`1.CreateServiceProvider(Object containerBuilder)
+   at Microsoft.Extensions.Hosting.HostBuilder.CreateServiceProvider()
+   at Microsoft.Extensions.Hosting.HostBuilder.Build()
+   at MyAutoAPI1.Program.Main(String[] args) in C:\Users\erekl\Desktop\Code\E-commerce\MyAutoAPI\MyAutoAPI1\Program.cs:line 23
+2022-07-20 22:27:42.410 +04:00 [FTL] Host terminated unexpectedly
+System.ArgumentException: Cannot instantiate implementation type 'Microsoft.Extensions.Hosting.BackgroundService' for service type 'Microsoft.Extensions.Hosting.IHostedService'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.Populate()
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory..ctor(IEnumerable`1 descriptors)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine..ctor(IEnumerable`1 serviceDescriptors)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CompiledServiceProviderEngine..ctor(IEnumerable`1 serviceDescriptors)
+   at Microsoft.Extensions.DependencyInjection.ServiceCollectionContainerBuilderExtensions.BuildServiceProvider(IServiceCollection services, ServiceProviderOptions options)
+   at Microsoft.Extensions.DependencyInjection.DefaultServiceProviderFactory.CreateServiceProvider(IServiceCollection containerBuilder)
+   at Microsoft.Extensions.Hosting.Internal.ServiceFactoryAdapter`1.CreateServiceProvider(Object containerBuilder)
+   at Microsoft.Extensions.Hosting.HostBuilder.CreateServiceProvider()
+   at Microsoft.Extensions.Hosting.HostBuilder.Build()
+   at MyAutoAPI1.Program.Main(String[] args) in C:\Users\erekl\Desktop\Code\E-commerce\MyAutoAPI\MyAutoAPI1\Program.cs:line 23
+2022-07-20 22:28:01.821 +04:00 [FTL] Host terminated unexpectedly
+System.ArgumentException: Cannot instantiate implementation type 'Microsoft.Extensions.Hosting.BackgroundService' for service type 'Microsoft.Extensions.Hosting.IHostedService'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.Populate()
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory..ctor(IEnumerable`1 descriptors)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine..ctor(IEnumerable`1 serviceDescriptors)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CompiledServiceProviderEngine..ctor(IEnumerable`1 serviceDescriptors)
+   at Microsoft.Extensions.DependencyInjection.ServiceCollectionContainerBuilderExtensions.BuildServiceProvider(IServiceCollection services, ServiceProviderOptions options)
+   at Microsoft.Extensions.DependencyInjection.DefaultServiceProviderFactory.CreateServiceProvider(IServiceCollection containerBuilder)
+   at Microsoft.Extensions.Hosting.Internal.ServiceFactoryAdapter`1.CreateServiceProvider(Object containerBuilder)
+   at Microsoft.Extensions.Hosting.HostBuilder.CreateServiceProvider()
+   at Microsoft.Extensions.Hosting.HostBuilder.Build()
+   at MyAutoAPI1.Program.Main(String[] args) in C:\Users\erekl\Desktop\Code\E-commerce\MyAutoAPI\MyAutoAPI1\Program.cs:line 23
+2022-07-20 22:32:54.131 +04:00 [FTL] Host terminated unexpectedly
+System.AggregateException: Some services are not able to be constructed (Error while validating the service descriptor 'ServiceType: Microsoft.Extensions.Hosting.IHostedService Lifetime: Singleton ImplementationType: MyAutoAPI1.BackgroundServices.MyBackgroundService': Cannot consume scoped service 'MyAutoAPI1.Models.MyDbContext' from singleton 'Microsoft.Extensions.Hosting.IHostedService'.)
+ ---> System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: Microsoft.Extensions.Hosting.IHostedService Lifetime: Singleton ImplementationType: MyAutoAPI1.BackgroundServices.MyBackgroundService': Cannot consume scoped service 'MyAutoAPI1.Models.MyDbContext' from singleton 'Microsoft.Extensions.Hosting.IHostedService'.
+ ---> System.InvalidOperationException: Cannot consume scoped service 'MyAutoAPI1.Models.MyDbContext' from singleton 'Microsoft.Extensions.Hosting.IHostedService'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitScopeCache(ServiceCallSite scopedCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitConstructor(ConstructorCallSite constructorCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitRootCache(ServiceCallSite singletonCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.ValidateCallSite(ServiceCallSite callSite)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.Microsoft.Extensions.DependencyInjection.ServiceLookup.IServiceProviderEngineCallback.OnCreate(ServiceCallSite callSite)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(IEnumerable`1 serviceDescriptors, IServiceProviderEngine engine, ServiceProviderOptions options)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(IEnumerable`1 serviceDescriptors, IServiceProviderEngine engine, ServiceProviderOptions options)
+   at Microsoft.Extensions.DependencyInjection.ServiceCollectionContainerBuilderExtensions.BuildServiceProvider(IServiceCollection services, ServiceProviderOptions options)
+   at Microsoft.Extensions.DependencyInjection.DefaultServiceProviderFactory.CreateServiceProvider(IServiceCollection containerBuilder)
+   at Microsoft.Extensions.Hosting.Internal.ServiceFactoryAdapter`1.CreateServiceProvider(Object containerBuilder)
+   at Microsoft.Extensions.Hosting.HostBuilder.CreateServiceProvider()
+   at Microsoft.Extensions.Hosting.HostBuilder.Build()
+   at MyAutoAPI1.Program.Main(String[] args) in C:\Users\erekl\Desktop\Code\E-commerce\MyAutoAPI\MyAutoAPI1\Program.cs:line 23
+2022-07-20 22:34:34.240 +04:00 [FTL] Host terminated unexpectedly
+System.AggregateException: Some services are not able to be constructed (Error while validating the service descriptor 'ServiceType: Microsoft.Extensions.Hosting.IHostedService Lifetime: Singleton ImplementationType: MyAutoAPI1.BackgroundServices.MyBackgroundService': Cannot consume scoped service 'MyAutoAPI1.Models.MyDbContext' from singleton 'Microsoft.Extensions.Hosting.IHostedService'.)
+ ---> System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: Microsoft.Extensions.Hosting.IHostedService Lifetime: Singleton ImplementationType: MyAutoAPI1.BackgroundServices.MyBackgroundService': Cannot consume scoped service 'MyAutoAPI1.Models.MyDbContext' from singleton 'Microsoft.Extensions.Hosting.IHostedService'.
+ ---> System.InvalidOperationException: Cannot consume scoped service 'MyAutoAPI1.Models.MyDbContext' from singleton 'Microsoft.Extensions.Hosting.IHostedService'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitScopeCache(ServiceCallSite scopedCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitConstructor(ConstructorCallSite constructorCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitRootCache(ServiceCallSite singletonCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.ValidateCallSite(ServiceCallSite callSite)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.Microsoft.Extensions.DependencyInjection.ServiceLookup.IServiceProviderEngineCallback.OnCreate(ServiceCallSite callSite)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(IEnumerable`1 serviceDescriptors, IServiceProviderEngine engine, ServiceProviderOptions options)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(IEnumerable`1 serviceDescriptors, IServiceProviderEngine engine, ServiceProviderOptions options)
+   at Microsoft.Extensions.DependencyInjection.ServiceCollectionContainerBuilderExtensions.BuildServiceProvider(IServiceCollection services, ServiceProviderOptions options)
+   at Microsoft.Extensions.DependencyInjection.DefaultServiceProviderFactory.CreateServiceProvider(IServiceCollection containerBuilder)
+   at Microsoft.Extensions.Hosting.Internal.ServiceFactoryAdapter`1.CreateServiceProvider(Object containerBuilder)
+   at Microsoft.Extensions.Hosting.HostBuilder.CreateServiceProvider()
+   at Microsoft.Extensions.Hosting.HostBuilder.Build()
+   at MyAutoAPI1.Program.Main(String[] args) in C:\Users\erekl\Desktop\Code\E-commerce\MyAutoAPI\MyAutoAPI1\Program.cs:line 23
+2022-07-20 22:37:34.721 +04:00 [FTL] Host terminated unexpectedly
+System.AggregateException: Some services are not able to be constructed (Error while validating the service descriptor 'ServiceType: Microsoft.Extensions.Hosting.IHostedService Lifetime: Singleton ImplementationType: MyAutoAPI1.BackgroundServices.MyBackgroundService': Cannot consume scoped service 'MyAutoAPI1.Models.MyDbContext' from singleton 'Microsoft.Extensions.Hosting.IHostedService'.)
+ ---> System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: Microsoft.Extensions.Hosting.IHostedService Lifetime: Singleton ImplementationType: MyAutoAPI1.BackgroundServices.MyBackgroundService': Cannot consume scoped service 'MyAutoAPI1.Models.MyDbContext' from singleton 'Microsoft.Extensions.Hosting.IHostedService'.
+ ---> System.InvalidOperationException: Cannot consume scoped service 'MyAutoAPI1.Models.MyDbContext' from singleton 'Microsoft.Extensions.Hosting.IHostedService'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitScopeCache(ServiceCallSite scopedCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitConstructor(ConstructorCallSite constructorCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitRootCache(ServiceCallSite singletonCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.ValidateCallSite(ServiceCallSite callSite)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.Microsoft.Extensions.DependencyInjection.ServiceLookup.IServiceProviderEngineCallback.OnCreate(ServiceCallSite callSite)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(IEnumerable`1 serviceDescriptors, IServiceProviderEngine engine, ServiceProviderOptions options)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(IEnumerable`1 serviceDescriptors, IServiceProviderEngine engine, ServiceProviderOptions options)
+   at Microsoft.Extensions.DependencyInjection.ServiceCollectionContainerBuilderExtensions.BuildServiceProvider(IServiceCollection services, ServiceProviderOptions options)
+   at Microsoft.Extensions.DependencyInjection.DefaultServiceProviderFactory.CreateServiceProvider(IServiceCollection containerBuilder)
+   at Microsoft.Extensions.Hosting.Internal.ServiceFactoryAdapter`1.CreateServiceProvider(Object containerBuilder)
+   at Microsoft.Extensions.Hosting.HostBuilder.CreateServiceProvider()
+   at Microsoft.Extensions.Hosting.HostBuilder.Build()
+   at MyAutoAPI1.Program.Main(String[] args) in C:\Users\erekl\Desktop\Code\E-commerce\MyAutoAPI\MyAutoAPI1\Program.cs:line 23
+2022-07-20 23:37:08.601 +04:00 [FTL] Host terminated unexpectedly
+System.AggregateException: Some services are not able to be constructed (Error while validating the service descriptor 'ServiceType: Microsoft.Extensions.Hosting.IHostedService Lifetime: Singleton ImplementationType: MyAutoAPI1.BackgroundServices.MyBackgroundService': Cannot consume scoped service 'MyAutoAPI1.Models.MyDbContext' from singleton 'Microsoft.Extensions.Hosting.IHostedService'.)
+ ---> System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: Microsoft.Extensions.Hosting.IHostedService Lifetime: Singleton ImplementationType: MyAutoAPI1.BackgroundServices.MyBackgroundService': Cannot consume scoped service 'MyAutoAPI1.Models.MyDbContext' from singleton 'Microsoft.Extensions.Hosting.IHostedService'.
+ ---> System.InvalidOperationException: Cannot consume scoped service 'MyAutoAPI1.Models.MyDbContext' from singleton 'Microsoft.Extensions.Hosting.IHostedService'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitScopeCache(ServiceCallSite scopedCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitConstructor(ConstructorCallSite constructorCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitRootCache(ServiceCallSite singletonCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.ValidateCallSite(ServiceCallSite callSite)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.Microsoft.Extensions.DependencyInjection.ServiceLookup.IServiceProviderEngineCallback.OnCreate(ServiceCallSite callSite)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(IEnumerable`1 serviceDescriptors, IServiceProviderEngine engine, ServiceProviderOptions options)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(IEnumerable`1 serviceDescriptors, IServiceProviderEngine engine, ServiceProviderOptions options)
+   at Microsoft.Extensions.DependencyInjection.ServiceCollectionContainerBuilderExtensions.BuildServiceProvider(IServiceCollection services, ServiceProviderOptions options)
+   at Microsoft.Extensions.DependencyInjection.DefaultServiceProviderFactory.CreateServiceProvider(IServiceCollection containerBuilder)
+   at Microsoft.Extensions.Hosting.Internal.ServiceFactoryAdapter`1.CreateServiceProvider(Object containerBuilder)
+   at Microsoft.Extensions.Hosting.HostBuilder.CreateServiceProvider()
+   at Microsoft.Extensions.Hosting.HostBuilder.Build()
+   at MyAutoAPI1.Program.Main(String[] args) in C:\Users\erekl\Desktop\Code\E-commerce\MyAutoAPI\MyAutoAPI1\Program.cs:line 23
+2022-07-20 23:41:59.720 +04:00 [FTL] Host terminated unexpectedly
+System.AggregateException: Some services are not able to be constructed (Error while validating the service descriptor 'ServiceType: Microsoft.Extensions.Hosting.IHostedService Lifetime: Singleton ImplementationType: MyAutoAPI1.BackgroundServices.MyBackgroundService': Cannot consume scoped service 'MyAutoAPI1.Models.MyDbContext' from singleton 'Microsoft.Extensions.Hosting.IHostedService'.)
+ ---> System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: Microsoft.Extensions.Hosting.IHostedService Lifetime: Singleton ImplementationType: MyAutoAPI1.BackgroundServices.MyBackgroundService': Cannot consume scoped service 'MyAutoAPI1.Models.MyDbContext' from singleton 'Microsoft.Extensions.Hosting.IHostedService'.
+ ---> System.InvalidOperationException: Cannot consume scoped service 'MyAutoAPI1.Models.MyDbContext' from singleton 'Microsoft.Extensions.Hosting.IHostedService'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitScopeCache(ServiceCallSite scopedCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitConstructor(ConstructorCallSite constructorCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitRootCache(ServiceCallSite singletonCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.ValidateCallSite(ServiceCallSite callSite)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.Microsoft.Extensions.DependencyInjection.ServiceLookup.IServiceProviderEngineCallback.OnCreate(ServiceCallSite callSite)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(IEnumerable`1 serviceDescriptors, IServiceProviderEngine engine, ServiceProviderOptions options)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(IEnumerable`1 serviceDescriptors, IServiceProviderEngine engine, ServiceProviderOptions options)
+   at Microsoft.Extensions.DependencyInjection.ServiceCollectionContainerBuilderExtensions.BuildServiceProvider(IServiceCollection services, ServiceProviderOptions options)
+   at Microsoft.Extensions.DependencyInjection.DefaultServiceProviderFactory.CreateServiceProvider(IServiceCollection containerBuilder)
+   at Microsoft.Extensions.Hosting.Internal.ServiceFactoryAdapter`1.CreateServiceProvider(Object containerBuilder)
+   at Microsoft.Extensions.Hosting.HostBuilder.CreateServiceProvider()
+   at Microsoft.Extensions.Hosting.HostBuilder.Build()
+   at MyAutoAPI1.Program.Main(String[] args) in C:\Users\erekl\Desktop\Code\E-commerce\MyAutoAPI\MyAutoAPI1\Program.cs:line 23
