@@ -22,7 +22,6 @@ namespace MyAutoAPI1.BackgroundServices
             using(var scope = _serviceProvider.CreateScope())
             {
                 var migrationDbService = scope.ServiceProvider.GetRequiredService<MIgrationDb>();
-
                 migrationDbService.Migration();
 
                 var roleService = scope.ServiceProvider.GetRequiredService<IRoleServices>();
