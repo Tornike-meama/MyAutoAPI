@@ -18,6 +18,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using MyAutoAPI1.Services.Role;
 using MyAutoAPI1.BackgroundServices;
+using MyAutoAPI1.BackgroundServices.MigrateDb;
 
 namespace MyAutoAPI1
 {
@@ -94,6 +95,8 @@ namespace MyAutoAPI1
             });
 
             services.AddHostedService<MyBackgroundService>();
+            services.AddTransient<MIgrationDb, MIgrationDb>();
+
             services.AddTransient<IStatementServices, StatementServices>();
             services.AddTransient<ICurrencyServices, CurrencyServices>();
             services.AddTransient<IRoleServices, RoleServices>();
