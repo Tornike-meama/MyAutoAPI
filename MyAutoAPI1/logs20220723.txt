@@ -1,0 +1,244 @@
+2022-07-23 13:20:14.816 +04:00 [INF] User profile is available. Using 'C:\Users\erekl\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-07-23 13:20:16.321 +04:00 [INF] Entity Framework Core 5.0.1 initialized 'MyDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2022-07-23 13:20:17.209 +04:00 [INF] Executed DbCommand (18ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2022-07-23 13:20:17.241 +04:00 [INF] Executed DbCommand (16ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2022-07-23 13:20:17.249 +04:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2022-07-23 13:20:17.252 +04:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2022-07-23 13:20:17.263 +04:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2022-07-23 13:20:17.356 +04:00 [INF] No migrations were applied. The database is already up to date.
+2022-07-23 13:20:17.635 +04:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AspNetRoles] AS [a]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2022-07-23 13:20:18.395 +04:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-07-23 13:20:18.399 +04:00 [INF] Hosting environment: Development
+2022-07-23 13:20:18.405 +04:00 [INF] Content root path: C:\Users\erekl\Desktop\Code\E-commerce\MyAutoAPI\MyAutoAPI1
+2022-07-23 13:20:18.590 +04:00 [INF] Request starting HTTP/2 GET https://localhost:44359/swagger/index.html - -
+2022-07-23 13:20:19.122 +04:00 [INF] Request starting HTTP/2 GET https://localhost:44359/_framework/aspnetcore-browser-refresh.js - -
+2022-07-23 13:20:19.124 +04:00 [INF] Request starting HTTP/2 GET https://localhost:44359/_vs/browserLink - -
+2022-07-23 13:20:19.130 +04:00 [INF] Request finished HTTP/2 GET https://localhost:44359/swagger/index.html - - - 200 - text/html;charset=utf-8 536.0808ms
+2022-07-23 13:20:19.179 +04:00 [INF] Request finished HTTP/2 GET https://localhost:44359/_framework/aspnetcore-browser-refresh.js - - - 200 11990 application/javascript;+charset=utf-8 51.4538ms
+2022-07-23 13:20:19.272 +04:00 [INF] Request finished HTTP/2 GET https://localhost:44359/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 147.4339ms
+2022-07-23 13:20:19.330 +04:00 [INF] Request starting HTTP/2 GET https://localhost:44359/swagger/v1/swagger.json - -
+2022-07-23 13:20:19.490 +04:00 [ERR] An unhandled exception has occurred while executing the request.
+Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Failed to generate Operation for action - MyAutoAPI1.Controllers.StatementController.AddStatement (MyAutoAPI1). See inner exception
+ ---> Swashbuckle.AspNetCore.SwaggerGen.SchemaGeneratorException: Failed to generate Schema for type - MyAutoAPI1.Controllers.GetBody.Statement.AddCurrencyModel. See inner exception
+ ---> System.InvalidOperationException: Can't use schemaId "$AddCurrencyModel" for type "$MyAutoAPI1.Controllers.GetBody.Statement.AddCurrencyModel". The same schemaId is already used for type "$MyAutoAPI1.Controllers.GetBody.Currency.AddCurrencyModel"
+   at Swashbuckle.AspNetCore.SwaggerGen.SchemaRepository.RegisterType(Type type, String schemaId)
+   at Swashbuckle.AspNetCore.SwaggerGen.SchemaGenerator.GenerateReferencedSchema(Type type, SchemaRepository schemaRepository, Func`1 definitionFactory)
+   at Swashbuckle.AspNetCore.SwaggerGen.SchemaGenerator.GenerateSchemaForType(Type type, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SchemaGenerator.GenerateSchema(Type type, SchemaRepository schemaRepository, MemberInfo memberInfo, ParameterInfo parameterInfo)
+   --- End of inner exception stack trace ---
+   at Swashbuckle.AspNetCore.SwaggerGen.SchemaGenerator.GenerateSchema(Type type, SchemaRepository schemaRepository, MemberInfo memberInfo, ParameterInfo parameterInfo)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateRequestBodyFromBodyParameter(ApiDescription apiDescription, SchemaRepository schemaRepository, ApiParameterDescription bodyParameter)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateRequestBody(ApiDescription apiDescription, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperation(ApiDescription apiDescription, SchemaRepository schemaRepository)
+   --- End of inner exception stack trace ---
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperation(ApiDescription apiDescription, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperations(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePaths(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwagger(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2022-07-23 13:20:19.670 +04:00 [INF] Request finished HTTP/2 GET https://localhost:44359/swagger/v1/swagger.json - - - 500 - text/plain 340.3667ms
+2022-07-23 13:20:40.484 +04:00 [INF] Request starting HTTP/1.1 POST https://localhost:44359/api/statement/add application/json 109
+2022-07-23 13:20:41.313 +04:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2022-07-23 13:20:41.321 +04:00 [INF] Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'.
+2022-07-23 13:20:41.327 +04:00 [INF] Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'.
+2022-07-23 13:20:41.337 +04:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2022-07-23 13:20:41.351 +04:00 [INF] AuthenticationScheme: Bearer was challenged.
+2022-07-23 13:20:41.355 +04:00 [INF] Request finished HTTP/1.1 POST https://localhost:44359/api/statement/add application/json 109 - 401 - - 871.5141ms
+2022-07-23 13:20:52.879 +04:00 [INF] Request starting HTTP/1.1 POST https://localhost:44359/identity/login application/json 67
+2022-07-23 13:20:52.886 +04:00 [INF] Executing endpoint 'MyAutoAPI1.Controllers.IdentityController.Login (MyAutoAPI1)'
+2022-07-23 13:20:52.942 +04:00 [INF] Route matched with {action = "Login", controller = "Identity", page = "", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(MyAutoAPI1.Controllers.GetQueries.LoginRequest) on controller MyAutoAPI1.Controllers.IdentityController (MyAutoAPI1).
+2022-07-23 13:20:52.977 +04:00 [INF] Entity Framework Core 5.0.1 initialized 'MyDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2022-07-23 13:20:53.138 +04:00 [INF] Executed DbCommand (38ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2022-07-23 13:20:53.338 +04:00 [INF] Executed DbCommand (4ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2022-07-23 13:20:53.377 +04:00 [INF] Executing OkObjectResult, writing value of type 'MyAutoAPI1.Models.AuthResponse`1[[System.String, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2022-07-23 13:20:53.393 +04:00 [INF] Executed action MyAutoAPI1.Controllers.IdentityController.Login (MyAutoAPI1) in 444.4954ms
+2022-07-23 13:20:53.397 +04:00 [INF] Executed endpoint 'MyAutoAPI1.Controllers.IdentityController.Login (MyAutoAPI1)'
+2022-07-23 13:20:53.405 +04:00 [INF] Request finished HTTP/1.1 POST https://localhost:44359/identity/login application/json 67 - 200 - application/json;+charset=utf-8 525.9806ms
+2022-07-23 13:21:02.878 +04:00 [INF] Request starting HTTP/1.1 POST https://localhost:44359/api/statement/add application/json 109
+2022-07-23 13:21:02.897 +04:00 [INF] Successfully validated the token.
+2022-07-23 13:21:02.904 +04:00 [INF] Authorization was successful.
+2022-07-23 13:21:02.908 +04:00 [INF] Executing endpoint 'MyAutoAPI1.Controllers.StatementController.AddStatement (MyAutoAPI1)'
+2022-07-23 13:21:02.914 +04:00 [INF] Route matched with {action = "AddStatement", controller = "Statement", page = "", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AddStatement(MyAutoAPI1.Controllers.GetBody.Statement.AddCurrencyModel) on controller MyAutoAPI1.Controllers.StatementController (MyAutoAPI1).
+2022-07-23 13:21:03.012 +04:00 [INF] Entity Framework Core 5.0.1 initialized 'MyDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2022-07-23 13:21:03.020 +04:00 [INF] Executed DbCommand (1ms) [Parameters=[@__creatorId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AspNetUsers] AS [a]
+        WHERE [a].[Id] = @__creatorId_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2022-07-23 13:21:03.038 +04:00 [INF] Executed DbCommand (8ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Name], [c].[ShortName], [c].[Symbol]
+FROM [Currencies] AS [c]
+WHERE [c].[Id] = @__id_0
+2022-07-23 13:22:32.247 +04:00 [INF] User profile is available. Using 'C:\Users\erekl\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-07-23 13:22:33.107 +04:00 [INF] Entity Framework Core 5.0.1 initialized 'MyDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2022-07-23 13:22:33.516 +04:00 [INF] Executed DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2022-07-23 13:22:33.544 +04:00 [INF] Executed DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2022-07-23 13:22:33.550 +04:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2022-07-23 13:22:33.553 +04:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2022-07-23 13:22:33.562 +04:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2022-07-23 13:22:33.590 +04:00 [INF] No migrations were applied. The database is already up to date.
+2022-07-23 13:22:33.812 +04:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AspNetRoles] AS [a]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2022-07-23 13:22:34.029 +04:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-07-23 13:22:34.033 +04:00 [INF] Hosting environment: Development
+2022-07-23 13:22:34.045 +04:00 [INF] Content root path: C:\Users\erekl\Desktop\Code\E-commerce\MyAutoAPI\MyAutoAPI1
+2022-07-23 13:22:34.083 +04:00 [INF] Request starting HTTP/2 GET https://localhost:44359/swagger/index.html - -
+2022-07-23 13:22:34.407 +04:00 [INF] Request starting HTTP/2 GET https://localhost:44359/_framework/aspnetcore-browser-refresh.js - -
+2022-07-23 13:22:34.415 +04:00 [INF] Request finished HTTP/2 GET https://localhost:44359/swagger/index.html - - - 200 - text/html;charset=utf-8 333.1655ms
+2022-07-23 13:22:34.424 +04:00 [INF] Request starting HTTP/2 GET https://localhost:44359/_vs/browserLink - -
+2022-07-23 13:22:34.450 +04:00 [INF] Request finished HTTP/2 GET https://localhost:44359/_framework/aspnetcore-browser-refresh.js - - - 200 11990 application/javascript;+charset=utf-8 28.5912ms
+2022-07-23 13:22:34.544 +04:00 [INF] Request finished HTTP/2 GET https://localhost:44359/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 119.9152ms
+2022-07-23 13:22:34.598 +04:00 [INF] Request starting HTTP/2 GET https://localhost:44359/swagger/v1/swagger.json - -
+2022-07-23 13:22:34.661 +04:00 [ERR] An unhandled exception has occurred while executing the request.
+Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Failed to generate Operation for action - MyAutoAPI1.Controllers.StatementController.AddStatement (MyAutoAPI1). See inner exception
+ ---> Swashbuckle.AspNetCore.SwaggerGen.SchemaGeneratorException: Failed to generate Schema for type - MyAutoAPI1.Controllers.GetBody.Statement.AddCurrencyModel. See inner exception
+ ---> System.InvalidOperationException: Can't use schemaId "$AddCurrencyModel" for type "$MyAutoAPI1.Controllers.GetBody.Statement.AddCurrencyModel". The same schemaId is already used for type "$MyAutoAPI1.Controllers.GetBody.Currency.AddCurrencyModel"
+   at Swashbuckle.AspNetCore.SwaggerGen.SchemaRepository.RegisterType(Type type, String schemaId)
+   at Swashbuckle.AspNetCore.SwaggerGen.SchemaGenerator.GenerateReferencedSchema(Type type, SchemaRepository schemaRepository, Func`1 definitionFactory)
+   at Swashbuckle.AspNetCore.SwaggerGen.SchemaGenerator.GenerateSchemaForType(Type type, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SchemaGenerator.GenerateSchema(Type type, SchemaRepository schemaRepository, MemberInfo memberInfo, ParameterInfo parameterInfo)
+   --- End of inner exception stack trace ---
+   at Swashbuckle.AspNetCore.SwaggerGen.SchemaGenerator.GenerateSchema(Type type, SchemaRepository schemaRepository, MemberInfo memberInfo, ParameterInfo parameterInfo)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateRequestBodyFromBodyParameter(ApiDescription apiDescription, SchemaRepository schemaRepository, ApiParameterDescription bodyParameter)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateRequestBody(ApiDescription apiDescription, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperation(ApiDescription apiDescription, SchemaRepository schemaRepository)
+   --- End of inner exception stack trace ---
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperation(ApiDescription apiDescription, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperations(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePaths(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwagger(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2022-07-23 13:22:34.792 +04:00 [INF] Request finished HTTP/2 GET https://localhost:44359/swagger/v1/swagger.json - - - 500 - text/plain 193.0638ms
+2022-07-23 13:22:36.919 +04:00 [INF] Request starting HTTP/1.1 POST https://localhost:44359/api/statement/add application/json 109
+2022-07-23 13:22:37.257 +04:00 [INF] Successfully validated the token.
+2022-07-23 13:22:37.267 +04:00 [INF] Authorization was successful.
+2022-07-23 13:22:37.272 +04:00 [INF] Executing endpoint 'MyAutoAPI1.Controllers.StatementController.AddStatement (MyAutoAPI1)'
+2022-07-23 13:22:37.307 +04:00 [INF] Route matched with {action = "AddStatement", controller = "Statement", page = "", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AddStatement(MyAutoAPI1.Controllers.GetBody.Statement.AddCurrencyModel) on controller MyAutoAPI1.Controllers.StatementController (MyAutoAPI1).
+2022-07-23 13:22:37.401 +04:00 [INF] Entity Framework Core 5.0.1 initialized 'MyDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2022-07-23 13:22:37.479 +04:00 [INF] Executed DbCommand (23ms) [Parameters=[@__creatorId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AspNetUsers] AS [a]
+        WHERE [a].[Id] = @__creatorId_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2022-07-23 13:22:37.564 +04:00 [INF] Executed DbCommand (12ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Name], [c].[ShortName], [c].[Symbol]
+FROM [Currencies] AS [c]
+WHERE [c].[Id] = @__id_0
+2022-07-23 13:28:28.704 +04:00 [INF] User profile is available. Using 'C:\Users\erekl\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-07-23 13:28:29.699 +04:00 [INF] Entity Framework Core 5.0.1 initialized 'MyDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2022-07-23 13:28:30.092 +04:00 [INF] Executed DbCommand (22ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2022-07-23 13:28:30.124 +04:00 [INF] Executed DbCommand (16ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2022-07-23 13:28:30.129 +04:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2022-07-23 13:28:30.133 +04:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2022-07-23 13:28:30.148 +04:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2022-07-23 13:28:30.181 +04:00 [INF] No migrations were applied. The database is already up to date.
+2022-07-23 13:28:30.417 +04:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AspNetRoles] AS [a]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2022-07-23 13:28:30.660 +04:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-07-23 13:28:30.663 +04:00 [INF] Hosting environment: Development
+2022-07-23 13:28:30.677 +04:00 [INF] Content root path: C:\Users\erekl\Desktop\Code\E-commerce\MyAutoAPI\MyAutoAPI1
+2022-07-23 13:28:30.726 +04:00 [INF] Request starting HTTP/1.1 POST https://localhost:44359/api/statement/add application/json 109
+2022-07-23 13:28:30.726 +04:00 [INF] Request starting HTTP/2 GET https://localhost:44359/swagger/index.html - -
+2022-07-23 13:28:31.193 +04:00 [INF] Request finished HTTP/2 GET https://localhost:44359/swagger/index.html - - - 200 - text/html;charset=utf-8 462.9651ms
+2022-07-23 13:28:31.225 +04:00 [INF] Request starting HTTP/2 GET https://localhost:44359/_framework/aspnetcore-browser-refresh.js - -
+2022-07-23 13:28:31.238 +04:00 [INF] Request finished HTTP/2 GET https://localhost:44359/_framework/aspnetcore-browser-refresh.js - - - 200 11990 application/javascript;+charset=utf-8 13.4801ms
+2022-07-23 13:28:31.254 +04:00 [INF] Request starting HTTP/2 GET https://localhost:44359/_vs/browserLink - -
+2022-07-23 13:28:31.303 +04:00 [INF] Successfully validated the token.
+2022-07-23 13:28:31.323 +04:00 [INF] Authorization was successful.
+2022-07-23 13:28:31.330 +04:00 [INF] Executing endpoint 'MyAutoAPI1.Controllers.StatementController.AddStatement (MyAutoAPI1)'
+2022-07-23 13:28:31.339 +04:00 [INF] Request finished HTTP/2 GET https://localhost:44359/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 84.3468ms
+2022-07-23 13:28:31.399 +04:00 [INF] Route matched with {action = "AddStatement", controller = "Statement", page = "", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AddStatement(MyAutoAPI1.Controllers.GetBody.Statement.AddCurrencyModel) on controller MyAutoAPI1.Controllers.StatementController (MyAutoAPI1).
+2022-07-23 13:28:31.457 +04:00 [INF] Entity Framework Core 5.0.1 initialized 'MyDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2022-07-23 13:28:31.467 +04:00 [INF] Request starting HTTP/2 GET https://localhost:44359/swagger/v1/swagger.json - -
+2022-07-23 13:28:31.530 +04:00 [INF] Executed DbCommand (28ms) [Parameters=[@__creatorId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AspNetUsers] AS [a]
+        WHERE [a].[Id] = @__creatorId_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2022-07-23 13:28:31.558 +04:00 [ERR] An unhandled exception has occurred while executing the request.
+Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Failed to generate Operation for action - MyAutoAPI1.Controllers.StatementController.AddStatement (MyAutoAPI1). See inner exception
+ ---> Swashbuckle.AspNetCore.SwaggerGen.SchemaGeneratorException: Failed to generate Schema for type - MyAutoAPI1.Controllers.GetBody.Statement.AddCurrencyModel. See inner exception
+ ---> System.InvalidOperationException: Can't use schemaId "$AddCurrencyModel" for type "$MyAutoAPI1.Controllers.GetBody.Statement.AddCurrencyModel". The same schemaId is already used for type "$MyAutoAPI1.Controllers.GetBody.Currency.AddCurrencyModel"
+   at Swashbuckle.AspNetCore.SwaggerGen.SchemaRepository.RegisterType(Type type, String schemaId)
+   at Swashbuckle.AspNetCore.SwaggerGen.SchemaGenerator.GenerateReferencedSchema(Type type, SchemaRepository schemaRepository, Func`1 definitionFactory)
+   at Swashbuckle.AspNetCore.SwaggerGen.SchemaGenerator.GenerateSchemaForType(Type type, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SchemaGenerator.GenerateSchema(Type type, SchemaRepository schemaRepository, MemberInfo memberInfo, ParameterInfo parameterInfo)
+   --- End of inner exception stack trace ---
+   at Swashbuckle.AspNetCore.SwaggerGen.SchemaGenerator.GenerateSchema(Type type, SchemaRepository schemaRepository, MemberInfo memberInfo, ParameterInfo parameterInfo)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateRequestBodyFromBodyParameter(ApiDescription apiDescription, SchemaRepository schemaRepository, ApiParameterDescription bodyParameter)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateRequestBody(ApiDescription apiDescription, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperation(ApiDescription apiDescription, SchemaRepository schemaRepository)
+   --- End of inner exception stack trace ---
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperation(ApiDescription apiDescription, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperations(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePaths(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwagger(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2022-07-23 13:28:31.650 +04:00 [INF] Request finished HTTP/2 GET https://localhost:44359/swagger/v1/swagger.json - - - 500 - text/plain 182.9962ms
+2022-07-23 13:28:31.679 +04:00 [INF] Executed DbCommand (17ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Name], [c].[ShortName], [c].[Symbol]
+FROM [Currencies] AS [c]
+WHERE [c].[Id] = @__id_0

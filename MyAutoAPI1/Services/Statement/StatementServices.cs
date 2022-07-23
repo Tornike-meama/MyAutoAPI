@@ -1,4 +1,5 @@
-﻿using FluentValidation.Results;
+﻿using AutoMapper;
+using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
 using MyAutoAPI1.Controllers.GetBody.Statement;
 using MyAutoAPI1.Models;
@@ -75,7 +76,7 @@ namespace MyAutoAPI1.Services
                 return new BadRequest<List<Statement>>(ex.Message);
             }
         }
-        public async Task<IComonResponse<Statement>>AddStatementAsync(AddCurrencyModel data, string creatorId)
+        public async Task<IComonResponse<Statement>>AddStatementAsync(AddStatementModel data, string creatorId)
         {
             try
             {
@@ -84,6 +85,11 @@ namespace MyAutoAPI1.Services
 
                 var currentCurrency = await _currencyServices.GetCurrencyByIdAsync(data.CurrencyId);
                 if (currentCurrency.IsError) return new NotFound<Statement>("Can't find Currency");
+
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<AddStatementModel, Statement>());
+
+                var mapper = new Mapper(config);
+                Statement dto = mapper.Map<Statement>(data);
 
                 var statement = new Statement()
                 {

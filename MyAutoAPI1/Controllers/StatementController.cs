@@ -44,7 +44,7 @@ namespace MyAutoAPI1.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         [Route("add")]
-        public async Task<IActionResult> AddStatement([FromBody] AddCurrencyModel statement)
+        public async Task<IActionResult> AddStatement([FromBody] AddStatementModel statement)
         {
             var userId =  User.FindFirstValue(ClaimTypes.NameIdentifier);
             var res = await _statementService.AddStatementAsync(statement, userId);
