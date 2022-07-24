@@ -47,6 +47,7 @@ namespace MyAutoAPI1.Controllers
         public async Task<IActionResult> AddStatement([FromBody] AddStatementModel statement)
         {
             var userId =  User.FindFirstValue(ClaimTypes.NameIdentifier);
+            statement.Creator = userId;
             var res = await _statementService.AddStatementAsync(statement, userId);
             return DataResponse(res);
         }

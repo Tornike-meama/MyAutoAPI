@@ -97,6 +97,7 @@ namespace MyAutoAPI1
             services.AddHostedService<MyBackgroundService>();
             services.AddTransient<MIgrationDb, MIgrationDb>();
 
+            services.AddAutoMapper(typeof(Startup));
             services.AddTransient<IStatementServices, StatementServices>();
             services.AddTransient<ICurrencyServices, CurrencyServices>();
             services.AddTransient<IRoleServices, RoleServices>();

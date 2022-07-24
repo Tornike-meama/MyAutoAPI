@@ -7,7 +7,7 @@ namespace MyAutoAPI1.Models
     public class Statement
     {
         public int Id { get; set; }
-        public DateTime CreationDate { get; set; }
+        public DateTime CreationDate { get; set; } = DateTime.UtcNow;
         public string Title { get; set; }
         public string Description { get; set; }
         public int Price { get; set; }

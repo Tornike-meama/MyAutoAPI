@@ -16,11 +16,13 @@ namespace MyAutoAPI1.Services
     public class StatementServices : IStatementServices
     {
         private readonly MyDbContext _dbContext;
+        private readonly IMapper _mapper;
         private readonly ICurrencyServices _currencyServices;
 
-        public StatementServices(MyDbContext dbContext, ICurrencyServices currencyServices)
+        public StatementServices(MyDbContext dbContext, IMapper mapper, ICurrencyServices currencyServices)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
             _currencyServices = currencyServices;
         }
 
@@ -86,20 +88,9 @@ namespace MyAutoAPI1.Services
                 var currentCurrency = await _currencyServices.GetCurrencyByIdAsync(data.CurrencyId);
                 if (currentCurrency.IsError) return new NotFound<Statement>("Can't find Currency");
 
-                var config = new MapperConfiguration(cfg => cfg.CreateMap<AddStatementModel, Statement>());
+                var mappedResponse = _mapper.Map<Statement>(data);
 
-                var mapper = new Mapper(config);
-                Statement dto = mapper.Map<Statement>(data);
-
-                var statement = new Statement()
-                {
-                    Title = data.Title,
-                    Description = data.Description,
-                    Price = data.Price,
-                    CurrencyId = data.CurrencyId,
-                    Creator = creatorId,
-                    CreationDate = DateTime.UtcNow,
-                };
+                var statement = _mapper.Map<Statement>(data);
 
                 StatementValidator validaor = new StatementValidator();
                 ValidationResult validationResult = validaor.Validate(statement);
