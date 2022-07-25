@@ -69,7 +69,7 @@ namespace MyAutoAPI1.Services
                     return new BadRequest<List<Statement>>("you don't provide userId");
                 }
 
-                var res = await _dbContext.Statement.Where(o => o.Creator.CompareTo(userId) == 0).ToListAsync();
+                var res = await _dbContext.Statement.Where(o => o.CreatorId.CompareTo(userId) == 0).ToListAsync();
 
                 return new ComonResponse<List<Statement>>(res);
             }
@@ -123,7 +123,7 @@ namespace MyAutoAPI1.Services
                     return new NotFound<Statement>("Statement not found invalid ID");
                 }
 
-                if(statement.Creator != creatorId)
+                if(statement.CreatorId != creatorId)
                 {
                     return new NotFound<Statement>("You can't edit other statement");
                 }
@@ -136,7 +136,7 @@ namespace MyAutoAPI1.Services
                 var dataResponse = new Statement()
                 {
                     Id = statement.Id,
-                    Creator = creatorId,
+                    CreatorId = creatorId,
                     Title = data.Title,
                     Description = data.Description,
                     Price = data.Price,
@@ -162,7 +162,7 @@ namespace MyAutoAPI1.Services
                     return new BadRequest<Statement>("Statement not found");
                 }
 
-                if(deleteStatement.Creator != userId)
+                if(deleteStatement.CreatorId != userId)
                 {
                     return new BadRequest<Statement>("User only can delete own statement");
                 }
