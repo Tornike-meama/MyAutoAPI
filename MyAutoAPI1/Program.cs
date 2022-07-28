@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Formatting.Compact;
 using System;
+using System.IO;
 
 namespace MyAutoAPI1
 {
@@ -15,7 +15,7 @@ namespace MyAutoAPI1
             Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
             .WriteTo.Debug(new RenderedCompactJsonFormatter())
-            .WriteTo.File("logs.txt", rollingInterval: RollingInterval.Day)
+            .WriteTo.File(Path.Combine(AppContext.BaseDirectory,"logs.txt"), rollingInterval: RollingInterval.Day)
             .CreateLogger();
 
             try
