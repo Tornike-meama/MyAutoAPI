@@ -147,6 +147,13 @@ namespace MyAutoAPI1.Services.Identity
                 return new BadRequest<UserDTO>(ex.Message);
             }
         }
+        public async Task CheckAdminUserAsyncInBG()
+        {
+            if (!_dbContext.Users.Any())
+            {
+                await RegisterAsync("admin@gmail.com", "Admin@123", "Admin");
+            }
+        }
 
         private async Task<IComonResponse<string>>GenerateAuthResultForUser(IdentityUser user)
         {
