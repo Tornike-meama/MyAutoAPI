@@ -14,7 +14,7 @@ namespace MyAutoAPI1
 
             Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
-            .WriteTo.Debug(new RenderedCompactJsonFormatter())
+             .WriteTo.Debug(new RenderedCompactJsonFormatter())
             .WriteTo.File(Path.Combine(AppContext.BaseDirectory,"logs.txt"), rollingInterval: RollingInterval.Day)
             .CreateLogger();
 

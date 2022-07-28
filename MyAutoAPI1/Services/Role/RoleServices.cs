@@ -82,13 +82,23 @@ namespace MyAutoAPI1.Services.Role
             }
         }
 
-        public async Task CheckRolesAsyncInBG()
+        public async Task InitilizeAdminAndRolesAsync()
         {
             if (!_dbContext.Roles.Any())
             {
                 await _roleManager.CreateAsync(new IdentityRole("Admin"));
                 await _roleManager.CreateAsync(new IdentityRole("Editor"));
             }
+
+            var adminUser = _dbContext.Users.FirstOrDefault(o => o.Email == "admin@gmail.com");
+            var adminRole = _dbContext.Roles.FirstOrDefault(o => o.Name.Equals("Admin"));
+
+            if (adminUser == null)
+            {
+                throw new Exception("Admin can't be find from CheckRolesAsyncInBG");
+            }
+
+            await AddUserInRoleAsync(new AdduserInRoleModel { UserId = adminUser.Id, RoleId = adminRole.Id });
         }
 
         public async Task<IComonResponse<List<IdentityRole>>>GetAllRoleAsync()

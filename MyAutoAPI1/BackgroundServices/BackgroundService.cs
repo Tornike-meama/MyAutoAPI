@@ -25,7 +25,7 @@ namespace MyAutoAPI1.BackgroundServices
                 migrationDbService.Migration();
 
                 var roleService = scope.ServiceProvider.GetRequiredService<IRoleServices>();
-                await roleService.CheckRolesAsyncInBG();
+                await roleService.InitilizeAdminAndRolesAsync();
             }
         }
 
