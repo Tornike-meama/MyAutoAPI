@@ -13,6 +13,5 @@ namespace MyAutoAPI1.Models
 
         public DbSet<Statement> Statement { get; set; }
         public DbSet<Currency> Currencies { get; set; }
-        public object FirstOrDefaault { get; internal set; }
     }
 }
