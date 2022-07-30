@@ -1,16 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using MyAutoAPI1.Models;
-using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using MyAutoAPI1.Services;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using MyAutoAPI1.Controllers.StatamentController;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.Net.Http;
 using System.Security.Claims;
 using MyAutoAPI1.Controllers.GetBody.Statement;
+using FluentValidation.Results;
+using System.Linq;
 
 namespace MyAutoAPI1.Controllers
 {
@@ -46,6 +43,15 @@ namespace MyAutoAPI1.Controllers
         [Route("add")]
         public async Task<IActionResult> AddStatement([FromBody] AddStatementModel statement)
         {
+
+            AddStatementValidator validaor = new AddStatementValidator();
+            ValidationResult validationResult = await validaor.ValidateAsync(statement);
+
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(string.Join(", ", validationResult.Errors.Select(o => o.ErrorMessage)));
+            }
+
             var userId =  User.FindFirstValue(ClaimTypes.NameIdentifier);
             statement.Creator = userId;
             var res = await _statementService.AddStatementAsync(statement, userId);
@@ -57,6 +63,14 @@ namespace MyAutoAPI1.Controllers
         [Route("update")]
         public async Task<IActionResult> UpdateStatement([FromBody] UpdateStatement statement)
         {
+            UpdateStatementValidator validaor = new UpdateStatementValidator();
+            ValidationResult validationResult = await validaor.ValidateAsync(statement);
+
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(string.Join(", ", validationResult.Errors.Select(o => o.ErrorMessage)));
+            }
+
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var res = await _statementService.UpdateStatementAsync(statement, userId);
             return DataResponse(res);

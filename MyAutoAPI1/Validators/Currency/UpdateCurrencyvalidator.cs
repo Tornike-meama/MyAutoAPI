@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using MyAutoAPI1.Controllers.GetBody.Currency;
 
-namespace MyAutoAPI1.Validators
+namespace MyAutoAPI1.Validators.Currency
 {
     public class UpdateCurrencyvalidator : AbstractValidator<UpdateCurrencyModel>
     {

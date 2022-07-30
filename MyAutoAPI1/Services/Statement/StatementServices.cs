@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
 using MyAutoAPI1.Controllers.GetBody.Statement;
 using MyAutoAPI1.Models;
@@ -7,7 +6,6 @@ using MyAutoAPI1.Models.Responses;
 using MyAutoAPI1.Services.Currency;
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -91,11 +89,6 @@ namespace MyAutoAPI1.Services
                 var mappedResponse = _mapper.Map<Statement>(data);
 
                 var statement = _mapper.Map<Statement>(data);
-
-                StatementValidator validaor = new StatementValidator();
-                ValidationResult validationResult = validaor.Validate(statement);
-
-               if (!validationResult.IsValid) return new BadRequest<Statement>(string.Join(", ", validationResult.Errors.Select(o => o.ErrorMessage)));
 
                 _dbContext.Statement.Add(statement);
                 await _dbContext.SaveChangesAsync();

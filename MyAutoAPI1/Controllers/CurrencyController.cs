@@ -1,14 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MyAutoAPI1.Controllers.GetBody.Currency;
-using MyAutoAPI1.Models;
-using MyAutoAPI1.Services;
 using MyAutoAPI1.Services.Currency;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentValidation.Results;
-using MyAutoAPI1.Validators;
 using System.Linq;
+using MyAutoAPI1.Validators.Currency;
 
 namespace MyAutoAPI1.Controllers
 {
