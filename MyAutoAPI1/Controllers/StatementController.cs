@@ -32,11 +32,7 @@ namespace MyAutoAPI1.Controllers
 
         [HttpGet]
         [Route("getByUserId")]
-        public async Task<IActionResult> GetStatementByUserId([FromQuery] string userId)
-        {
-            var res = await _statementService.GetStatementByUserIdAsync(userId);
-            return DataResponse(res);
-        }
+        public async Task<IActionResult> GetStatementByUserId([FromQuery] string userId) => DataResponse(await _statementService.GetStatementByUserIdAsync(userId));
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
