@@ -8,6 +8,7 @@ using System.Security.Claims;
 using MyAutoAPI1.Controllers.GetBody.Statement;
 using FluentValidation.Results;
 using System.Linq;
+using MyAutoAPI1.Validators;
 
 namespace MyAutoAPI1.Controllers
 {
@@ -37,17 +38,9 @@ namespace MyAutoAPI1.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         [Route("add")]
+        [RequestsValidator(Arguments = new object[] { typeof(AddStatementValidator)})]
         public async Task<IActionResult> AddStatement([FromBody] AddStatementModel statement)
         {
-
-            AddStatementValidator validaor = new AddStatementValidator();
-            ValidationResult validationResult = await validaor.ValidateAsync(statement);
-
-            if (!validationResult.IsValid)
-            {
-                return BadRequest(string.Join(", ", validationResult.Errors.Select(o => o.ErrorMessage)));
-            }
-
             var userId =  User.FindFirstValue(ClaimTypes.NameIdentifier);
             statement.Creator = userId;
             var res = await _statementService.AddStatementAsync(statement, userId);
@@ -57,15 +50,9 @@ namespace MyAutoAPI1.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         [Route("update")]
+        [RequestsValidator(Arguments = new object[] { typeof(UpdateStatementValidator) })]
         public async Task<IActionResult> UpdateStatement([FromBody] UpdateStatement statement)
         {
-            UpdateStatementValidator validaor = new UpdateStatementValidator();
-            ValidationResult validationResult = await validaor.ValidateAsync(statement);
-
-            if (!validationResult.IsValid)
-            {
-                return BadRequest(string.Join(", ", validationResult.Errors.Select(o => o.ErrorMessage)));
-            }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var res = await _statementService.UpdateStatementAsync(statement, userId);

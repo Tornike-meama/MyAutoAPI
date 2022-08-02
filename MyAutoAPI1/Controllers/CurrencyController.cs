@@ -30,27 +30,13 @@ namespace MyAutoAPI1.Controllers
 
         [HttpPost]
         [Route("add")]
-        public async Task<IActionResult> AddCurrency([FromBody] AddCurrencyModel currency)
-        {
-            AddCurrencyValidator validaor = new AddCurrencyValidator();
-            ValidationResult validationResult = await validaor.ValidateAsync(currency);
-
-            if (!validationResult.IsValid)
-            {
-                return BadRequest(string.Join(", ", validationResult.Errors.Select(o => o.ErrorMessage)));
-            }
-
-            return DataResponse(await _currencyServices.AddCurrencyAsync(currency));
-        }
+        [RequestsValidator(Arguments = new object[] { typeof(AddCurrencyValidator)})]
+        public async Task<IActionResult> AddCurrency([FromBody] AddCurrencyModel currency) => DataResponse(await _currencyServices.AddCurrencyAsync(currency));
 
         [HttpPost]
         [Route("update")]
         [RequestsValidator(Arguments = new object[] {typeof(UpdateCurrencyvalidator)})]
-        public async Task<IActionResult> UpdateCurrency([FromBody] UpdateCurrencyModel currency)
-        {
-            
-            return DataResponse(await _currencyServices.UpdateCurrencyAsync(currency));
+        public async Task<IActionResult> UpdateCurrency([FromBody] UpdateCurrencyModel currency) => DataResponse(await _currencyServices.UpdateCurrencyAsync(currency));
 
-        }
     }
 }

@@ -42,14 +42,28 @@ namespace MyAutoAPI1.Validators
 
                 var validator = Activator.CreateInstance(type);
 
+                if(validator == null)
+                {
+                    throw new Exception("Validator type is not valid");
+                }
+
                 var methods = validator.GetType().GetMethods().FirstOrDefault(o => o.Name == "Validate");
+
+                if (methods?.Invoke(validator, new object[] { body }) == null)
+                {
+                    throw new Exception("some error");
+                }
 
                 var validationResult = methods.Invoke(validator, new object[] { body }) as ValidationResult;
 
                 if(!validationResult.IsValid)
                 {
                     context.Result = new ObjectResult(context.ModelState) {
-                        Value = string.Join(", ", validationResult.Errors.Select(o => o.ErrorMessage)),
+                        Value = new {
+                            message = string.Join(", ", validationResult.Errors.Select(o => o.ErrorMessage)),
+                            isError = true,
+                            data = ""
+                        },
                         StatusCode = StatusCodes.Status400BadRequest
                     };
                 }
