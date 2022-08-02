@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using FluentValidation.Results;
 using System.Linq;
 using MyAutoAPI1.Validators.Currency;
+using MyAutoAPI1.Validators;
 
 namespace MyAutoAPI1.Controllers
 {
@@ -44,15 +45,9 @@ namespace MyAutoAPI1.Controllers
 
         [HttpPost]
         [Route("update")]
+        [RequestsValidator(Arguments = new object[] {typeof(UpdateCurrencyvalidator)})]
         public async Task<IActionResult> UpdateCurrency([FromBody] UpdateCurrencyModel currency)
         {
-            UpdateCurrencyvalidator validaor = new UpdateCurrencyvalidator();
-            ValidationResult validationResult = await validaor.ValidateAsync(currency);
-
-            if(!validationResult.IsValid)
-            {
-                return BadRequest(string.Join(", ", validationResult.Errors.Select(o => o.ErrorMessage)));
-            }
             
             return DataResponse(await _currencyServices.UpdateCurrencyAsync(currency));
 
