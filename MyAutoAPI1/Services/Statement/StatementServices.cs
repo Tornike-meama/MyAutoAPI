@@ -1,4 +1,4 @@
-﻿using FluentValidation.Results;
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using MyAutoAPI1.Controllers.GetBody.Statement;
 using MyAutoAPI1.Models;
@@ -6,7 +6,6 @@ using MyAutoAPI1.Models.Responses;
 using MyAutoAPI1.Services.Currency;
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,15 +14,17 @@ namespace MyAutoAPI1.Services
     public class StatementServices : IStatementServices
     {
         private readonly MyDbContext _dbContext;
+        private readonly IMapper _mapper;
         private readonly ICurrencyServices _currencyServices;
 
-        public StatementServices(MyDbContext dbContext, ICurrencyServices currencyServices)
+        public StatementServices(MyDbContext dbContext, IMapper mapper, ICurrencyServices currencyServices)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
             _currencyServices = currencyServices;
         }
 
-        public async Task<IComonResponse<List<Statement>>> GetAllStatementsAsync(int count, int fromIndex)
+        public async Task<IComonResponse<List<Statement>>>GetAllStatementsAsync(int count, int fromIndex)
         {
             try
             {
@@ -66,7 +67,7 @@ namespace MyAutoAPI1.Services
                     return new BadRequest<List<Statement>>("you don't provide userId");
                 }
 
-                var res = await _dbContext.Statement.Where(o => o.Creator.CompareTo(userId) == 0).ToListAsync();
+                var res = await _dbContext.Statement.Where(o => o.CreatorId.CompareTo(userId) == 0).ToListAsync();
 
                 return new ComonResponse<List<Statement>>(res);
             }
@@ -75,7 +76,7 @@ namespace MyAutoAPI1.Services
                 return new BadRequest<List<Statement>>(ex.Message);
             }
         }
-        public async Task<IComonResponse<Statement>> AddStatementAsync(AddCurrencyModel data, string creatorId)
+        public async Task<IComonResponse<Statement>>AddStatementAsync(AddStatementModel data, string creatorId)
         {
             try
             {
@@ -85,19 +86,9 @@ namespace MyAutoAPI1.Services
                 var currentCurrency = await _currencyServices.GetCurrencyByIdAsync(data.CurrencyId);
                 if (currentCurrency.IsError) return new NotFound<Statement>("Can't find Currency");
 
-                var statement = new Statement()
-                {
-                    Title = data.Title,
-                    Description = data.Description,
-                    Price = data.Price,
-                    CurrencyId = data.CurrencyId,
-                    Creator = creatorId
-                };
+                var mappedResponse = _mapper.Map<Statement>(data);
 
-                StatementValidator validaor = new StatementValidator();
-                ValidationResult validationResult = validaor.Validate(statement);
-
-               if (!validationResult.IsValid) return new BadRequest<Statement>(string.Join(", ", validationResult.Errors.Select(o => o.ErrorMessage)));
+                var statement = _mapper.Map<Statement>(data);
 
                 _dbContext.Statement.Add(statement);
                 await _dbContext.SaveChangesAsync();
@@ -109,7 +100,7 @@ namespace MyAutoAPI1.Services
                 return new BadRequest<Statement>(ex.Message);
             }
         }
-        public async Task<IComonResponse<Statement>> UpdateStatementAsync(Statement data)
+        public async Task<IComonResponse<Statement>>UpdateStatementAsync(UpdateStatement data, string creatorId)
         {
             try
             {
@@ -118,24 +109,65 @@ namespace MyAutoAPI1.Services
                 {
                     return new NotFound<Statement>("Currency not found");
                 }
+
                 var statement = _dbContext.Statement.FirstOrDefault(o => o.Id == data.Id);
                 if(statement == null)
                 {
                     return new NotFound<Statement>("Statement not found invalid ID");
                 }
+
+                if(statement.CreatorId != creatorId)
+                {
+                    return new NotFound<Statement>("You can't edit other statement");
+                }
+
                 statement.Title = data.Title;
                 statement.Description = data.Description;
                 statement.Price = data.Price;
                 statement.CurrencyId = data.CurrencyId;
 
+                var dataResponse = new Statement()
+                {
+                    Id = statement.Id,
+                    CreatorId = creatorId,
+                    Title = data.Title,
+                    Description = data.Description,
+                    Price = data.Price,
+                    CurrencyId = data.CurrencyId,
+                };
+
                 await _dbContext.SaveChangesAsync();
-                return new ComonResponse<Statement>(data); ;
+                return new ComonResponse<Statement>(dataResponse); ;
             }
             catch (Exception ex)
             {
                 return new BadRequest<Statement>(ex.Message);
             }
         }
-    
+        public async Task<IComonResponse<Statement>>DeleteStatementAsync(int id, string userId)
+        {
+            try
+            {
+                var deleteStatement = _dbContext.Statement.FirstOrDefault(o => o.Id == id);
+
+                if(deleteStatement == null)
+                {
+                    return new BadRequest<Statement>("Statement not found");
+                }
+
+                if(deleteStatement.CreatorId != userId)
+                {
+                    return new BadRequest<Statement>("User only can delete own statement");
+                }
+
+                _dbContext.Statement.Remove(deleteStatement);
+                await _dbContext.SaveChangesAsync();
+                return new ComonResponse<Statement>(deleteStatement); ;
+            }
+            catch (Exception ex)
+            {
+                return new BadRequest<Statement>(ex.Message);
+            }
+        }
     }
 }

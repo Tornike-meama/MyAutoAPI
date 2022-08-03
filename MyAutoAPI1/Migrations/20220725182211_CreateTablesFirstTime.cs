@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MyAutoAPI1.Migrations
 {
-    public partial class AddNewTablesV1 : Migration
+    public partial class CreateTablesFirstTime : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -59,23 +59,6 @@ namespace MyAutoAPI1.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Currencies", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Statement",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Price = table.Column<int>(type: "int", nullable: false),
-                    CurrencyId = table.Column<int>(type: "int", nullable: false),
-                    Creator = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Statement", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -184,6 +167,36 @@ namespace MyAutoAPI1.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Statement",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<int>(type: "int", nullable: false),
+                    CurrencyId = table.Column<int>(type: "int", nullable: false),
+                    CreatorId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Statement", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Statement_AspNetUsers_CreatorId",
+                        column: x => x.CreatorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Statement_Currencies_CurrencyId",
+                        column: x => x.CurrencyId,
+                        principalTable: "Currencies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -222,6 +235,16 @@ namespace MyAutoAPI1.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Statement_CreatorId",
+                table: "Statement",
+                column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Statement_CurrencyId",
+                table: "Statement",
+                column: "CurrencyId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -242,9 +265,6 @@ namespace MyAutoAPI1.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Currencies");
-
-            migrationBuilder.DropTable(
                 name: "Statement");
 
             migrationBuilder.DropTable(
@@ -252,6 +272,9 @@ namespace MyAutoAPI1.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Currencies");
         }
     }
 }

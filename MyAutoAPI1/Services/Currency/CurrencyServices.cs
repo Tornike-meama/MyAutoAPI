@@ -5,7 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FluentValidation.Results;
+using MyAutoAPI1.Controllers.GetBody.Currency;
+using Serilog;
 
 namespace MyAutoAPI1.Services.Currency
 {
@@ -27,6 +28,7 @@ namespace MyAutoAPI1.Services.Currency
             }
             catch (Exception ex)
             {
+                Log.Fatal(ex.Message);
                 return new BadRequest<List<Models.Currency>>(ex.Message);
             }
         }
@@ -48,11 +50,11 @@ namespace MyAutoAPI1.Services.Currency
             }
         }
 
-        public async Task<IComonResponse<Models.Currency>>AddCurrencyAsync(Models.Currency data)
+        public async Task<IComonResponse<AddCurrencyModel>>AddCurrencyAsync(AddCurrencyModel data)
         {
             try
             {
-                if (data == null) return new BadRequest<Models.Currency>("Data is null");
+                if (data == null) return new BadRequest<AddCurrencyModel>("Data is null");
 
                 var currency = new Models.Currency()
                 {
@@ -61,20 +63,60 @@ namespace MyAutoAPI1.Services.Currency
                     Symbol = data.Symbol,
                 };
 
-                CurrencyValidator validaor = new CurrencyValidator();
-                ValidationResult validationResult = validaor.Validate(currency);
-
-                if (!validationResult.IsValid) return new BadRequest<Models.Currency>(string.Join(", ", validationResult.Errors.Select(o => o.ErrorMessage)));
-
                 _dbContext.Currencies.Add(currency);
                 await _dbContext.SaveChangesAsync();
-                return new ComonResponse<Models.Currency>(currency);
+                return new ComonResponse<AddCurrencyModel>(data);
             }
             catch (Exception ex)
             {
-                return new BadRequest<Models.Currency>(ex.Message);
+                return new BadRequest<AddCurrencyModel>(ex.Message);
             }
         }
 
+        public async Task<IComonResponse<UpdateCurrencyModel>>UpdateCurrencyAsync(UpdateCurrencyModel data)
+        {
+            try
+            {
+                if (data == null) return new BadRequest<UpdateCurrencyModel>("Data is null");
+
+                var currency = _dbContext.Currencies.FirstOrDefault(o => o.Id == data.Id);
+
+                if (currency == null)
+                {
+                    return new NotFound<UpdateCurrencyModel>("Currency not found");
+                }
+
+                currency.Name = data.Name;
+                currency.ShortName = data.ShortName;
+                currency.Symbol = data.Symbol;
+
+                await _dbContext.SaveChangesAsync();
+                return new ComonResponse<UpdateCurrencyModel>(data);
+            }
+            catch (Exception ex)
+            {
+                return new BadRequest<UpdateCurrencyModel>(ex.Message);
+            }
+        }
+
+        //public async Task<IComonResponse<Models.Currency>> DeleteCurrencyAsync(int id)
+        //{
+        //    try
+        //    {
+        //        var currency = _dbContext.Currencies.FirstOrDefault(o => o.Id == Id);
+
+        //        if (currency == null)
+        //        {
+        //            return new NotFound<Models.Currency>("Currency not found");
+        //        }
+
+                
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new BadRequest<Models.Currency>(ex.Message);
+        //    }
+        //}
     }
 }

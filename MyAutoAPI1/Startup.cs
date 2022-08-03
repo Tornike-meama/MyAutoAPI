@@ -1,13 +1,10 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MyAutoAPI1.Models;
@@ -16,14 +13,12 @@ using MyAutoAPI1.Services;
 using MyAutoAPI1.Services.Currency;
 using MyAutoAPI1.Services.Identity;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using MyAutoAPI1.Services.Role;
+using MyAutoAPI1.BackgroundServices;
+using MyAutoAPI1.BackgroundServices.MigrateDb;
 
 namespace MyAutoAPI1
 {
@@ -58,11 +53,11 @@ namespace MyAutoAPI1
                 x.TokenValidationParameters = new TokenValidationParameters()
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Secret)),
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     RequireExpirationTime = false,
-                    ValidateLifetime = true
+                    ValidateLifetime = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Secret)),
                 };
             });
 
@@ -99,10 +94,17 @@ namespace MyAutoAPI1
                     });
             });
 
+            services.AddHostedService<MyBackgroundService>();
+            services.AddTransient<MIgrationDb, MIgrationDb>();
+
+            services.AddAutoMapper(typeof(Startup));
             services.AddTransient<IStatementServices, StatementServices>();
             services.AddTransient<ICurrencyServices, CurrencyServices>();
+            services.AddTransient<IRoleServices, RoleServices>();
             services.AddDbContext<MyDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<MyDbContext>();
+            services.AddDefaultIdentity<IdentityUser>()
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<MyDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -115,10 +117,16 @@ namespace MyAutoAPI1
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MyAutoAPI1 v1"));
             }
 
+            app.UseCors(x => x
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .SetIsOriginAllowed(origin => true) // allow any origin
+                    .AllowCredentials()); // allow credentials
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

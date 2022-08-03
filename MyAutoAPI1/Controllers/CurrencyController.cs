@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using MyAutoAPI1.Models;
-using MyAutoAPI1.Services;
+﻿using Microsoft.AspNetCore.Mvc;
+using MyAutoAPI1.Controllers.GetBody.Currency;
 using MyAutoAPI1.Services.Currency;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using FluentValidation.Results;
+using System.Linq;
+using MyAutoAPI1.Validators.Currency;
+using MyAutoAPI1.Validators;
 
 namespace MyAutoAPI1.Controllers
 {
@@ -21,27 +22,21 @@ namespace MyAutoAPI1.Controllers
 
         [HttpGet]
         [Route("getAll")]
-        public async Task<IActionResult> GetAllCurrency()
-        {
-            var res = await _currencyServices.GetAllCurrencyAsync();
-            return DataResponse(res);
-        }
+        public async Task<IActionResult> GetAllCurrency() => DataResponse(await _currencyServices.GetAllCurrencyAsync());
 
         [HttpGet]
         [Route("getById")]
-        public async Task<IActionResult> GetCurrencyByI([FromQuery] int id)
-        {
-            var res = await _currencyServices.GetCurrencyByIdAsync(id);
-            return DataResponse(res);
-        }
+        public async Task<IActionResult> GetCurrencyByI([FromQuery] int id) => DataResponse(await _currencyServices.GetCurrencyByIdAsync(id));
 
         [HttpPost]
         [Route("add")]
+        [RequestsValidator(Arguments = new object[] { typeof(AddCurrencyValidator)})]
+        public async Task<IActionResult> AddCurrency([FromBody] AddCurrencyModel currency) => DataResponse(await _currencyServices.AddCurrencyAsync(currency));
 
-        public async Task<IActionResult> AddCurrency([FromBody] Currency currency)
-        {
-            var res = await _currencyServices.AddCurrencyAsync(currency);
-            return DataResponse(res);
-        }
+        [HttpPost]
+        [Route("update")]
+        [RequestsValidator(Arguments = new object[] {typeof(UpdateCurrencyvalidator)})]
+        public async Task<IActionResult> UpdateCurrency([FromBody] UpdateCurrencyModel currency) => DataResponse(await _currencyServices.UpdateCurrencyAsync(currency));
+
     }
 }
