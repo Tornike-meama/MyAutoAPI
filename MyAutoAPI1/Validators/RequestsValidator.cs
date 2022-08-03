@@ -16,16 +16,16 @@ namespace MyAutoAPI1.Validators
 
     public class RequestsValidator : TypeFilterAttribute
     {
-        public RequestsValidator() : base(typeof(RolesFilterAttributeImpl))
+        public RequestsValidator() : base(typeof(ValidateRequest))
         {
 
         }
 
-        private class RolesFilterAttributeImpl : IActionFilter
+        private class ValidateRequest : IActionFilter
         {
             private readonly Type type;
 
-            public RolesFilterAttributeImpl(Type type)
+            public ValidateRequest(Type type)
             {
                 this.type = type;
             }
